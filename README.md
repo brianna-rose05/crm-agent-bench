@@ -132,4 +132,4 @@ Each grader must pass a scripted correct agent and fail a scripted agent making 
 
 ## Citation
 
-> [Your name] (2026). *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks.* [link]
+> Pischke, B. (2026). *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks.* [link]
