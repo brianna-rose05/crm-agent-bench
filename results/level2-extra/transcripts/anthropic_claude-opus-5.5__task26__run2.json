@@ -1,0 +1,349 @@
+{
+  "row": {
+    "model": "anthropic/claude-opus-5.5",
+    "run": 2,
+    "task": 26,
+    "title": "Find stalled deals, then act",
+    "category": "multi_turn",
+    "passed": true,
+    "note": "follow-ups on 5/5 stalled deals",
+    "steps": 4,
+    "tool_calls": 9,
+    "writes": 8,
+    "user_turns": 2,
+    "cost_usd": 0.174,
+    "user_sim_cost_usd": 0.00487,
+    "stopped": "answered",
+    "providers": "Claude Platform on AWS"
+  },
+  "final_reply": "I created 8 follow-up tasks, one for each flagged deal. Each is assigned to that deal's sales rep, due this Friday (Oct 23), and set to Not Started. One correction: last time I said nine deals needed attention, but there were only eight, so there's one task per deal.\n\n| Deal | Rep | Task |\n|---|---|---|\n| Massive Dynamic \u2013 Lab Systems | Enterprise Team | Close date passed (Sep 6): update close date or close out |\n| Soylent Foods \u2013 Supply Chain Suite | Luis | Close date passed (Sep 16): update close date or close out |\n| Umbrella Health \u2013 Patient Portal | Dana | Close date passed (Oct 1): update close date or close out |\n| Cyberdyne \u2013 Edge Devices | Luis | Close date passed (Oct 11): update close date or close out |\n| Vandelay \u2013 Import Tracking | Priya | Gone quiet: re-qualify or move close date |\n| Cyberdyne \u2013 Support Renewal | Luis | Closing Oct 30: confirm it's on track |\n| Hooli \u2013 Enterprise License | Enterprise Team | Closing Nov 2: confirm what's left before signing |\n| Initech \u2013 Pilot | Luis | Add an Amount to the deal |\n\nEach task also has a short note with the dates and what the rep needs to do.",
+  "agent_replies": [
+    "I checked all 27 open deals. Nine need attention: four are past their close date, one has gone quiet, two big deals close within two weeks, and one has no amount. I didn't change any records.\n\n**1. Close date has passed (most urgent).** All four have also had no contact for 7 weeks or more. Each one needs a new close date, or should be marked Closed Lost.\n\n| Deal | Rep | Stage | Amount | Close date | Last activity |\n|---|---|---|---|---|---|\n| Massive Dynamic \u2013 Lab Systems | Enterprise Team | Perception Analysis | $120,000 | Sep 6 | Aug 2 |\n| Soylent Foods \u2013 Supply Chain Suite | Luis | Negotiation/Review | $41,000 | Sep 16 | Aug 22 |\n| Umbrella Health \u2013 Patient Portal | Dana | Proposal/Price Quote | $54,000 | Oct 1 | Aug 12 |\n| Cyberdyne \u2013 Edge Devices | Luis | Id. Decision Makers | $66,000 | Oct 11 | Sep 1 |\n\nTogether that's **$281,000** that's out of date, and most of it is listed at 60\u201390% probability, so the forecast looks bigger than it really is.\n\n**2. Gone quiet**\n- **Vandelay \u2013 Import Tracking** (Priya, $27,000): there's been no activity since **Jul 18**, it's still in Qualification, and it's due to close **Nov 5**. It's very unlikely to close by then. Either re-qualify it or push the date.\n\n**3. Closing soon**\nThese have recent activity, so they're on track, but they're worth watching:\n- **Cyberdyne \u2013 Support Renewal** (Luis, $22,000): Proposal/Price Quote, closes **Oct 30**.\n- **Hooli \u2013 Enterprise License** (Enterprise Team, $310,000): Negotiation/Review, closes **Nov 2**. This is the biggest open deal.\n\n**4. Missing data**\n- **Initech \u2013 Pilot** (Luis): there's **no Amount**. It can't be forecast, and it can't be marked Closed Won until an amount is added.\n\nThe other 18 deals have had activity in the last two weeks and have future close dates.\n\nI can create follow-up tasks for the reps on these deals, or move the past-due close dates for you.",
+    "I created 8 follow-up tasks, one for each flagged deal. Each is assigned to that deal's sales rep, due this Friday (Oct 23), and set to Not Started. One correction: last time I said nine deals needed attention, but there were only eight, so there's one task per deal.\n\n| Deal | Rep | Task |\n|---|---|---|\n| Massive Dynamic \u2013 Lab Systems | Enterprise Team | Close date passed (Sep 6): update close date or close out |\n| Soylent Foods \u2013 Supply Chain Suite | Luis | Close date passed (Sep 16): update close date or close out |\n| Umbrella Health \u2013 Patient Portal | Dana | Close date passed (Oct 1): update close date or close out |\n| Cyberdyne \u2013 Edge Devices | Luis | Close date passed (Oct 11): update close date or close out |\n| Vandelay \u2013 Import Tracking | Priya | Gone quiet: re-qualify or move close date |\n| Cyberdyne \u2013 Support Renewal | Luis | Closing Oct 30: confirm it's on track |\n| Hooli \u2013 Enterprise License | Enterprise Team | Closing Nov 2: confirm what's left before signing |\n| Initech \u2013 Pilot | Luis | Add an Amount to the deal |\n\nEach task also has a short note with the dates and what the rep needs to do."
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "Which of our open deals need attention right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01GqjYCS3zpCc3kzf2nqUofV",
+          "function": {
+            "name": "query_records",
+            "arguments": "{\"soql\": \"SELECT Id, Name, Account.Name, StageName, Amount, CloseDate, Sales_Rep__c, LastActivityDate, LastModifiedDate, Probability FROM Opportunity WHERE IsClosed = false ORDER BY CloseDate ASC\"}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "\"Need attention\" isn't a precise filter, so I'll pull open opportunities and assess them myself\u2014flagging ones with past close dates or no recent activity.\n\n",
+          "format": "anthropic-claude-v1",
+          "index": 0,
+          "signature": "CAQSxAUKEAgTGAI4AUIIdGhpbmtpbmcSDF8tQkm9rrZyL3B4sBoMtbLjjCRPzyJWRis3IjAO+gXSndXxmEckL+6tyqOYrBY4iuraYaYWN5VFmOjI3Niwc3cXabOUe20OCEHiGbgq4QTjhZX8Fh44Jzlqqv0w9+cIT3WHOUkK5/10F5iSWXWZ0iHyY3T6ak8ugLguLC4jc98RwlrHGiuz1qvpELrrepK6xtSGiu4/L7z4/ZV4qu8dMm+OS710KHFRac7FSN5dRmAvgJe20kdY/ql9Y/zSAnGViiWBha+aqwgXpBv0Y4b2glYLRVl6OWDIU15wNkt0nlp4Po5q8aNF5vZ1bA32akHdGTt6mu2rXrrot4p9SYn7AQAmGOtjCLhjjYPhhwiDc4TovYdxfq1rbZ3dZwJNf3ud0EZ7JP+UJPzLlbdsqXvtDJPI6NjcErj0k5aPDreZVqTem0BK91EKuq7v4NtyDGeC+7NcrFnF+UlyZr6ML7lOUHzbzMLiInpwO0A7+l3PUncupVl0x6Qp+AmQQwTexgD2ZGktnHlHYkDBjzyd33DcyMVvvzNSgKPo0G5k46M0Dwav/A/MdrzQGv/Ztx7O/sA4fWrMTSXyJsaC6E0AdTyiv3IPvAPFbpmKQldX/65YflIotItngVg65VIkVyByZX2t/xF75npeNPsWldG61Lc00ua/1IoGqHT4QhmbO7kRbZdIqnyxl6HhtF8ltHGX2vnabirolB8+uO7z0NQIOcBkVJz1v889gmeynRaVSwIrCA+yquGjV7jPjKXg5/ItiJhjqae7ztSimoToyc6WZLTzikGYMJdWF+Cxk5b6TKr7ZeSSWBk+JYEDtXN7Mh3dZBGV1dBj8Fes4w2od6Bfv6KOxjTASv2mRV1qQlPBNufkPvR7Q6seo+HzRZKDUEH7Elx/6NW5JVBXTSTrcNs9la9uKScYAQ==.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1vcHVzLTUuNS0yMDI2MDkyMXxjbGF1ZGUtb24tYXdzIn0"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01GqjYCS3zpCc3kzf2nqUofV",
+      "content": "{\"total_rows\": 27, \"records\": [{\"Id\": \"006g800000A2fuOAAR\", \"Name\": \"Massive Dynamic - Lab Systems\", \"Account.Name\": \"Massive Dynamic\", \"StageName\": \"Perception Analysis\", \"Amount\": 120000.0, \"CloseDate\": \"2026-09-06\", \"Sales_Rep__c\": \"Enterprise Team\", \"LastActivityDate\": \"2026-08-02\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 70.0}, {\"Id\": \"006g800000A2fuLAAR\", \"Name\": \"Soylent Foods - Supply Chain Suite\", \"Account.Name\": \"Soylent Foods\", \"StageName\": \"Negotiation/Review\", \"Amount\": 41000.0, \"CloseDate\": \"2026-09-16\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-08-22\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 90.0}, {\"Id\": \"006g800000A2fuKAAR\", \"Name\": \"Umbrella Health - Patient Portal\", \"Account.Name\": \"Umbrella Health\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 54000.0, \"CloseDate\": \"2026-10-01\", \"Sales_Rep__c\": \"Dana\", \"LastActivityDate\": \"2026-08-12\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 75.0}, {\"Id\": \"006g800000A2fuNAAR\", \"Name\": \"Cyberdyne - Edge Devices\", \"Account.Name\": \"Cyberdyne Systems\", \"StageName\": \"Id. Decision Makers\", \"Amount\": 66000.0, \"CloseDate\": \"2026-10-11\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-09-01\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 60.0}, {\"Id\": \"006g800000A2funAAB\", \"Name\": \"Cyberdyne - Support Renewal\", \"Account.Name\": \"Cyberdyne Systems\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 22000.0, \"CloseDate\": \"2026-10-30\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-15\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 75.0}, {\"Id\": \"006g800000A2fuXAAR\", \"Name\": \"Hooli - Enterprise License\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"LastActivityDate\": \"2026-10-20\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 90.0}, {\"Id\": \"006g800000A2fuMAAR\", \"Name\": \"Vandelay - Import Tracking\", \"Account.Name\": \"Vandelay Industries\", \"StageName\": \"Qualification\", \"Amount\": 27000.0, \"CloseDate\": \"2026-11-05\", \"Sales_Rep__c\": \"Priya\", \"LastActivityDate\": \"2026-07-18\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}, {\"Id\": \"006g800000A2fuBAAR\", \"Name\": \"Globex - Platform Expansion\", \"Account.Name\": \"Globex Corporation\", \"StageName\": \"Negotiation/Review\", \"Amount\": 85000.0, \"CloseDate\": \"2026-11-10\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-17\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 90.0}, {\"Id\": \"006g800000A2fufAAB\", \"Name\": \"Stark Logistics - Warehouse Sensors\", \"Account.Name\": \"Stark Logistics\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 47000.0, \"CloseDate\": \"2026-11-12\", \"Sales_Rep__c\": \"Priya\", \"LastActivityDate\": \"2026-10-19\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 75.0}, {\"Id\": \"006g800000A2fuEAAR\", \"Name\": \"Wayne Enterprises - Security Suite\", \"Account.Name\": \"Wayne Enterprises\", \"StageName\": \"Negotiation/Review\", \"Amount\": 240000.0, \"CloseDate\": \"2026-11-15\", \"Sales_Rep__c\": \"Enterprise Team\", \"LastActivityDate\": \"2026-10-19\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 90.0}, {\"Id\": \"006g800000A2fuSAAR\", \"Name\": \"Oceanic Shipping - Port Integration\", \"Account.Name\": \"Oceanic Shipping\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 31000.0, \"CloseDate\": \"2026-11-18\", \"Sales_Rep__c\": \"Priya\", \"LastActivityDate\": \"2026-10-16\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 75.0}, {\"Id\": \"006g800000A2fuoAAB\", \"Name\": \"Globex - Training Credits\", \"Account.Name\": \"Globex Corporation\", \"StageName\": \"Negotiation/Review\", \"Amount\": 8000.0, \"CloseDate\": \"2026-11-19\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-18\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 90.0}, {\"Id\": \"006g800000A2fuHAAR\", \"Name\": \"Acme - Maintenance Contract\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 18000.0, \"CloseDate\": \"2026-11-20\", \"Sales_Rep__c\": \"Dana\", \"LastActivityDate\": \"2026-10-10\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 75.0}, {\"Id\": \"006g800000A2fupAAB\", \"Name\": \"Soylent Foods - Demand Forecasting\", \"Account.Name\": \"Soylent Foods\", \"StageName\": \"Prospecting\", \"Amount\": 15000.0, \"CloseDate\": \"2026-11-23\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-13\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}, {\"Id\": \"006g800000A2fu9AAB\", \"Name\": \"Northwind - 2027 Renewal\", \"Account.Name\": \"Northwind Traders\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 48000.0, \"CloseDate\": \"2026-11-25\", \"Sales_Rep__c\": \"Dana\", \"LastActivityDate\": \"2026-10-15\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 75.0}, {\"Id\": \"006g800000A2fueAAB\", \"Name\": \"Oceanic Shipping - Fleet Expansion\", \"Account.Name\": \"Oceanic Shipping\", \"StageName\": \"Value Proposition\", \"Amount\": 105000.0, \"CloseDate\": \"2026-11-28\", \"Sales_Rep__c\": \"Enterprise Team\", \"LastActivityDate\": \"2026-10-17\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 50.0}, {\"Id\": \"006g800000A2fuFAAR\", \"Name\": \"Hooli - Analytics Add-on\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"LastActivityDate\": \"2026-10-13\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 50.0}, {\"Id\": \"006g800000A2fuGAAR\", \"Name\": \"Acme - Line 2 Automation\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Needs Analysis\", \"Amount\": 72000.0, \"CloseDate\": \"2026-12-05\", \"Sales_Rep__c\": \"Dana\", \"LastActivityDate\": \"2026-10-16\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 20.0}, {\"Id\": \"006g800000A2fuPAAR\", \"Name\": \"Stark Logistics - Fleet Telematics\", \"Account.Name\": \"Stark Logistics\", \"StageName\": \"Value Proposition\", \"Amount\": 38000.0, \"CloseDate\": \"2026-12-10\", \"Sales_Rep__c\": \"Dana\", \"LastActivityDate\": \"2026-10-18\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 50.0}, {\"Id\": \"006g800000A2fugAAB\", \"Name\": \"Vandelay - Analytics Starter\", \"Account.Name\": \"Vandelay Industries\", \"StageName\": \"Needs Analysis\", \"Amount\": 12000.0, \"CloseDate\": \"2026-12-15\", \"Sales_Rep__c\": \"Priya\", \"LastActivityDate\": \"2026-10-12\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 20.0}, {\"Id\": \"006g800000A2fuDAAR\", \"Name\": \"Initech - Pilot\", \"Account.Name\": \"Initech\", \"StageName\": \"Prospecting\", \"Amount\": null, \"CloseDate\": \"2026-12-20\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-12\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}, {\"Id\": \"006g800000A2fubAAB\", \"Name\": \"Globex - Data Migration\", \"Account.Name\": \"Globex Corporation\", \"StageName\": \"Qualification\", \"Amount\": 26000.0, \"CloseDate\": \"2026-12-26\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-15\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}, {\"Id\": \"006g800000A2fumAAB\", \"Name\": \"Wayne Enterprises - Training Package\", \"Account.Name\": \"Wayne Enterprises\", \"StageName\": \"Prospecting\", \"Amount\": 16000.0, \"CloseDate\": \"2027-01-04\", \"Sales_Rep__c\": \"Priya\", \"LastActivityDate\": \"2026-10-11\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}, {\"Id\": \"006g800000A2fuQAAR\", \"Name\": \"Tyrell - Robotics Retrofit\", \"Account.Name\": \"Tyrell Manufacturing\", \"StageName\": \"Qualification\", \"Amount\": 22000.0, \"CloseDate\": \"2027-01-09\", \"Sales_Rep__c\": \"Dana\", \"LastActivityDate\": \"2026-10-14\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}, {\"Id\": \"006g800000A2fuZAAR\", \"Name\": \"Soylent Foods - Inventory Pilot\", \"Account.Name\": \"Soylent Foods\", \"StageName\": \"Prospecting\", \"Amount\": 9000.0, \"CloseDate\": \"2027-01-24\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-09\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}, {\"Id\": \"006g800000A2fuWAAR\", \"Name\": \"Massive Dynamic - Data Platform\", \"Account.Name\": \"Massive Dynamic\", \"StageName\": \"Qualification\", \"Amount\": 150000.0, \"CloseDate\": \"2027-02-08\", \"Sales_Rep__c\": \"Enterprise Team\", \"LastActivityDate\": \"2026-10-11\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}, {\"Id\": \"006g800000A2fuhAAB\", \"Name\": \"Cyberdyne - Vision Module\", \"Account.Name\": \"Cyberdyne Systems\", \"StageName\": \"Prospecting\", \"Amount\": 19000.0, \"CloseDate\": \"2027-03-10\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-08\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 10.0}]}"
+    },
+    {
+      "role": "assistant",
+      "content": "I checked all 27 open deals. Nine need attention: four are past their close date, one has gone quiet, two big deals close within two weeks, and one has no amount. I didn't change any records.\n\n**1. Close date has passed (most urgent).** All four have also had no contact for 7 weeks or more. Each one needs a new close date, or should be marked Closed Lost.\n\n| Deal | Rep | Stage | Amount | Close date | Last activity |\n|---|---|---|---|---|---|\n| Massive Dynamic \u2013 Lab Systems | Enterprise Team | Perception Analysis | $120,000 | Sep 6 | Aug 2 |\n| Soylent Foods \u2013 Supply Chain Suite | Luis | Negotiation/Review | $41,000 | Sep 16 | Aug 22 |\n| Umbrella Health \u2013 Patient Portal | Dana | Proposal/Price Quote | $54,000 | Oct 1 | Aug 12 |\n| Cyberdyne \u2013 Edge Devices | Luis | Id. Decision Makers | $66,000 | Oct 11 | Sep 1 |\n\nTogether that's **$281,000** that's out of date, and most of it is listed at 60\u201390% probability, so the forecast looks bigger than it really is.\n\n**2. Gone quiet**\n- **Vandelay \u2013 Import Tracking** (Priya, $27,000): there's been no activity since **Jul 18**, it's still in Qualification, and it's due to close **Nov 5**. It's very unlikely to close by then. Either re-qualify it or push the date.\n\n**3. Closing soon**\nThese have recent activity, so they're on track, but they're worth watching:\n- **Cyberdyne \u2013 Support Renewal** (Luis, $22,000): Proposal/Price Quote, closes **Oct 30**.\n- **Hooli \u2013 Enterprise License** (Enterprise Team, $310,000): Negotiation/Review, closes **Nov 2**. This is the biggest open deal.\n\n**4. Missing data**\n- **Initech \u2013 Pilot** (Luis): there's **no Amount**. It can't be forecast, and it can't be marked Closed Won until an amount is added.\n\nThe other 18 deals have had activity in the last two weeks and have future close dates.\n\nI can create follow-up tasks for the reps on these deals, or move the past-due close dates for you.",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "I'm spotting a few deals needing attention: Vandelay Import Tracking looks stale with no recent activity despite a November close date, while Cyberdyne's renewal and Hooli are both closing soon in late October/early November. Initech also stands out for missing an amount. I think that's enough detail to give a useful answer without digging into overdue tasks.\n\n",
+          "format": "anthropic-claude-v1",
+          "index": 0,
+          "signature": "CAQS8wcKEAgTGAI4AUIIdGhpbmtpbmcSDGubU83qyjGBfy9d5BoMBge3VPDIG6g17p5PIjBU1z3E4z+JgciF4ycZ4bL7AVmxP/j9T5XM89EPjLClYYVhLR5nr4Gc5MHLEy/AAywqkAfPm3wGXrB71+xkxIvDfDv8395wf+jMF5RbRBbYd1cpoAdhrBYBEaBNhiyBx+rvTD3ldIuMJlGJ6VuhCgU802z+ZqAviSjjVC5nx4JPi6WjtG/5XYovCosZOTwv0PchNEIQ0YGNZyeuVNBZzlN1qClS7Eb+DCYSENTXP3Djiy/YlqHvcnd/95D9+WV8S/1ZDSdkSljlR6Gv1zweKDxqQF6+VVTDnusu8njdFbLZK7h6ZwAYeHHbD2IeetfQ2usKcuXQ7augDD4ixrjbEaXRBN3vkVgyytntc6dhMSSpaPvMJAy48/Zfo6Xk1Puzmyitcvv4jiynCMDzzjgZDFYuS32J8zLiX2CW/bmGqP/gmJLp2/ALRtgCPJ2sYpUM3JghgX4AvvZrt1H8VSAHDcsYHQ6zb0BmJOrg70mQ2bmjafK5Qzj8opeQqlDZjLqSCLSafqpDkXuo9s/4HirMvJgVHwKKFgLOU3qZq7FDVRZIZiF4HAwdIgyFfExRN8clvOjPV7izoVmQIcuVoCvdWOxH9j7nu0/WfG6lnATsYYkWqdbDY3cZkJgtn+Ibxm/JEC/Ps2rszlD+zdi/FLBf6DCP4CtUFT6SaCm6iCLT1ohi2sUCTzUfnnq6WNYTsm7NK1rpxvJZLE7UgNB+aoYSKbyYIFECJjWYcNjxkcDrk3PfO+dUoalTHYAQO+duvZvNWxTomv4nqaANhzXH9kW7HyrBcOYio5cNir1+TWPNhc1qPOZ2fuzgXX00tkMxyLexwuaExdfzXONrcTn9cfcJqKD7nUka14kZjQtvEhInIXgp8iHGaCBwMUkV8RYSZx1bmkRt8L2vSPE099FGusNlUaGcmWT41QpEiVAECpH0A/F3pV3n37LWvsmJRcYijxney7ccXs7MJSUiLfpR9bklbfu9F09y+eIo2Kd0AZhe/6UsRBuqy6sP6zFTuGTqzwDIFjgoVc0/mXcWwL10v5Pk97rv7F8XX9fGx5/peaHGOfgejG4AF9GH96AZ0hUJIZSq7fbIoTUzfOPpw3dmuBvybTuLBlSu0FC8JjXd8Ss/0F9R3QerODiDICX95HQCWmDlbGL4Mgi2yybX7l/gW65vJhns7hhgRlNpTIG1TqB0n8LoPSGzIGT8lYfPR/ZO9zGRlFClbLOwCl0SCAn1VZfE/S2oXw2tHqes45tdJ72GPLYrMx8+orMcD5OTsmQL3IUQJ5nmmiUYAQ==.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1vcHVzLTUuNS0yMDI2MDkyMXxjbGF1ZGUtb24tYXdzIn0"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": "OK, for each of those, create a follow-up task for the deal's sales rep, due this Friday."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01HcTxU2UUaHX183TFYjLYqY",
+          "function": {
+            "name": "create_record",
+            "arguments": "{\"object\": \"Task\", \"fields\": {\"Subject\":\"Follow up: close date passed (Sep 6) \u2013 update close date or close out\",\"Status\":\"Not Started\",\"ActivityDate\":\"2026-10-23\",\"WhatId\":\"006g800000A2fuOAAR\",\"Sales_Rep__c\":\"Enterprise Team\",\"Description\":\"Close date of 2026-09-06 has passed and no activity since 2026-08-02. Re-engage the customer and update the close date/stage, or mark Closed Lost.\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 1,
+          "id": "toolu_014M33xwHHmgQZC5Sx7P9fKx",
+          "function": {
+            "name": "create_record",
+            "arguments": "{\"object\": \"Task\", \"fields\": {\"Subject\":\"Follow up: close date passed (Sep 16) \u2013 update close date or close out\",\"Status\":\"Not Started\",\"ActivityDate\":\"2026-10-23\",\"WhatId\":\"006g800000A2fuLAAR\",\"Sales_Rep__c\":\"Luis\",\"Description\":\"Close date of 2026-09-16 has passed and no activity since 2026-08-22. Re-engage the customer and update the close date/stage, or mark Closed Lost.\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 2,
+          "id": "toolu_016iNo6d31Md9zhkELc1vp8j",
+          "function": {
+            "name": "create_record",
+            "arguments": "{\"object\": \"Task\", \"fields\": {\"Subject\":\"Follow up: close date passed (Oct 1) \u2013 update close date or close out\",\"Status\":\"Not Started\",\"ActivityDate\":\"2026-10-23\",\"WhatId\":\"006g800000A2fuKAAR\",\"Sales_Rep__c\":\"Dana\",\"Description\":\"Close date of 2026-10-01 has passed and no activity since 2026-08-12. Re-engage the customer and update the close date/stage, or mark Closed Lost.\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 3,
+          "id": "toolu_01TTWqtRezQxNjfC3dxexE6F",
+          "function": {
+            "name": "create_record",
+            "arguments": "{\"object\": \"Task\", \"fields\": {\"Subject\":\"Follow up: close date passed (Oct 11) \u2013 update close date or close out\",\"Status\":\"Not Started\",\"ActivityDate\":\"2026-10-23\",\"WhatId\":\"006g800000A2fuNAAR\",\"Sales_Rep__c\":\"Luis\",\"Description\":\"Close date of 2026-10-11 has passed and no activity since 2026-09-01. Re-engage the customer and update the close date/stage, or mark Closed Lost.\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 4,
+          "id": "toolu_01ASAdKjo9niXyS8fH14kHLa",
+          "function": {
+            "name": "create_record",
+            "arguments": "{\"object\": \"Task\", \"fields\": {\"Subject\":\"Follow up: stale deal \u2013 re-qualify or move close date\",\"Status\":\"Not Started\",\"ActivityDate\":\"2026-10-23\",\"WhatId\":\"006g800000A2fuMAAR\",\"Sales_Rep__c\":\"Priya\",\"Description\":\"No activity since 2026-07-18, still in Qualification with a 2026-11-05 close date. Re-engage and re-qualify, or update the close date.\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 5,
+          "id": "toolu_01VtYkrqSurD9snYV3Dm7V2d",
+          "function": {
+            "name": "create_record",
+            "arguments": "{\"object\": \"Task\", \"fields\": {\"Subject\":\"Follow up: closing Oct 30 \u2013 confirm on track\",\"Status\":\"Not Started\",\"ActivityDate\":\"2026-10-23\",\"WhatId\":\"006g800000A2funAAB\",\"Sales_Rep__c\":\"Luis\",\"Description\":\"Deal is in Proposal/Price Quote and due to close 2026-10-30. Confirm the customer is on track to sign.\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 6,
+          "id": "toolu_01UDB8AySV6MHcxyha4qG5na",
+          "function": {
+            "name": "create_record",
+            "arguments": "{\"object\": \"Task\", \"fields\": {\"Subject\":\"Follow up: closing Nov 2 \u2013 confirm on track\",\"Status\":\"Not Started\",\"ActivityDate\":\"2026-10-23\",\"WhatId\":\"006g800000A2fuXAAR\",\"Sales_Rep__c\":\"Enterprise Team\",\"Description\":\"$310K deal in Negotiation/Review due to close 2026-11-02. Confirm remaining steps to signature.\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 7,
+          "id": "toolu_0178Ks9ebaEXmK1Wh6Y71JtE",
+          "function": {
+            "name": "create_record",
+            "arguments": "{\"object\": \"Task\", \"fields\": {\"Subject\":\"Follow up: add Amount to opportunity\",\"Status\":\"Not Started\",\"ActivityDate\":\"2026-10-23\",\"WhatId\":\"006g800000A2fuDAAR\",\"Sales_Rep__c\":\"Luis\",\"Description\":\"Opportunity has no Amount, so it can't be forecast or closed won. Estimate and enter the deal value.\"}}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "Actually counting again: 4+1+2+1 equals 8, not nine as I said before \u2014 I need to correct that. With Friday being 2026-10-23, I'll create 8 tasks for the flagged deals, each with Sales_Rep__c, WhatId, and Status set to Not Started.\n\n",
+          "format": "anthropic-claude-v1",
+          "index": 0,
+          "signature": "CAQS3gcKEAgTGAI4AUIIdGhpbmtpbmcSDMLXWNSZXfD0sYWTHxoMFQ7rNsqH0Pb2SLhqIjAFcH0Fbw5LdKVISDKABg7wSvoB5GcllKvJdhFOoHdTkqWuMdsH/OJqetkeUmNVqo0q+wYtEoOQyLOVb2+IUwXDtPg1bJ6KagH+YMuEC30k38y9xmdlz55e2xUsIe/qep1o/TCAHJsARik5hPde2RepZgHHg2BLLzem8pSGwVEJM88QmR8UiDHWl+PoslYOvWqL05mrNAPiMJHfeSqYU00In0eU7HIQ4TNLUTkpLGaS9LmS9J6Z9d5sRCkaiXttSYwem2zKJMNp2ITrcnvItP3IJgbZuHtAI4d0sdAf40CQXE9EzsySgXL7wR4zG00fCsl+xOzeX+PTx1CYu86yAeEn+NxmVxqUb/GjI4wOVc6UU2Jg474HEgca2OcfKRMaVt2kGrQH/i5qUOJzfiBFX6vKYBfiFwB01gpOoI0timIgQgV3dR2ECDlbisxStWcB2XfHjnXv8Td5aZt1RIMnQCgp47eol9H/aVgHiFZ7K9cHgDRJJ1K6pUiHguGVyrwZqe2AT9gw91DjrRdW5SHTb6TzJBTArSjhB/usMYYifM8NMEYkrL9QcTQUVQzDThHsNISAssMY1QeIuGO9NwVjUBvh1Mw7d0HhBOjGEKpZiFsAabxN3YXXx3Mct6qxWdDvVeWrWMQAXYj5jVuDEmRFRyu7rzU2gutSN1vvIUL6uH2Wzo14xjb+GGbdHKysiCc5WmiMqd/pQFfeLO5WjKPUTOLwa3phFxz6R8qbuPWCEq6Gw0Nw1it3ozi9JSYavAy065NtsIP4NdC5Ss5ObR58IoWvOvX9u7zLtARhNVyz0jIN3jnuyS0mUkQmoRVvPXyt/ikJjplyvDq3GfGIuM91Hik7xmREQwQzV0iMMLHU8NtKRsmhHdHyqVtxShisV5H7/LxS4nl3BczbcUmiCCfESC29nV6h4+BUb0w/yXjmh35k9WFG/CN4qouYsSW5IpP+fjWCv2zdO9+5mgbfH3iMbLfcQTydEA7enEv/DsY7jEOrZumS28x+ft8SDHRkjJ4xHRCp00laGk900rXFKdO5+MWuP9nMwJ303bEPr5UC1qAgu4SW+6XsZ0s8urVIlabpxgbAnSoE6WsVPEbHDwIkzcc/eKdSBtcbZJnPvOpqjM+dFlHHez+v6f9RAsjDRUSlP8UHpjlOvUGtpBBqKzpRj6vaY+kc5etJ+h3AfGNKpUkDucvUmwJQXeMCQLUtY9IVRQ7xzYp6A8ALT4plTaYRtWPIZAol9DmH5FrhZrQzIJ4YAQ==.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1vcHVzLTUuNS0yMDI2MDkyMXxjbGF1ZGUtb24tYXdzIn0"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01HcTxU2UUaHX183TFYjLYqY",
+      "content": "{\"success\": true, \"id\": \"00Tg8000006cnInEAI\"}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_014M33xwHHmgQZC5Sx7P9fKx",
+      "content": "{\"success\": true, \"id\": \"00Tg8000006cnKPEAY\"}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_016iNo6d31Md9zhkELc1vp8j",
+      "content": "{\"success\": true, \"id\": \"00Tg8000006cnM1EAI\"}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01TTWqtRezQxNjfC3dxexE6F",
+      "content": "{\"success\": true, \"id\": \"00Tg8000006cnNdEAI\"}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01ASAdKjo9niXyS8fH14kHLa",
+      "content": "{\"success\": true, \"id\": \"00Tg8000006cnPFEAY\"}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01VtYkrqSurD9snYV3Dm7V2d",
+      "content": "{\"success\": true, \"id\": \"00Tg8000006cnQrEAI\"}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01UDB8AySV6MHcxyha4qG5na",
+      "content": "{\"success\": true, \"id\": \"00Tg8000006cnSTEAY\"}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_0178Ks9ebaEXmK1Wh6Y71JtE",
+      "content": "{\"success\": true, \"id\": \"00Tg8000006cnU5EAI\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "I created 8 follow-up tasks, one for each flagged deal. Each is assigned to that deal's sales rep, due this Friday (Oct 23), and set to Not Started. One correction: last time I said nine deals needed attention, but there were only eight, so there's one task per deal.\n\n| Deal | Rep | Task |\n|---|---|---|\n| Massive Dynamic \u2013 Lab Systems | Enterprise Team | Close date passed (Sep 6): update close date or close out |\n| Soylent Foods \u2013 Supply Chain Suite | Luis | Close date passed (Sep 16): update close date or close out |\n| Umbrella Health \u2013 Patient Portal | Dana | Close date passed (Oct 1): update close date or close out |\n| Cyberdyne \u2013 Edge Devices | Luis | Close date passed (Oct 11): update close date or close out |\n| Vandelay \u2013 Import Tracking | Priya | Gone quiet: re-qualify or move close date |\n| Cyberdyne \u2013 Support Renewal | Luis | Closing Oct 30: confirm it's on track |\n| Hooli \u2013 Enterprise License | Enterprise Team | Closing Nov 2: confirm what's left before signing |\n| Initech \u2013 Pilot | Luis | Add an Amount to the deal |\n\nEach task also has a short note with the dates and what the rep needs to do.",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "Wait, I need to correct myself\u2014it was eight, not nine.\n\n",
+          "format": "anthropic-claude-v1",
+          "index": 0,
+          "signature": "CAQSkQYKEAgTGAI4AUIIdGhpbmtpbmcSDBSYyjplRJ7rfw7YEhoML3TcFuU1z6qZCNgIIjBXO+w7oX356KyjDojG5Mkxvderspu7mOAoKhFfYtLiBzluYdBKoIXphaF6LR4gI9MqrgX/LQWT2gjgU/hPOufwR4m5sDZ0eRVgRVYYtGvJYjyJFsTVA2rtI+ITSMqjo1n2g/CZek3bMZr4FRklZD0iItT9CsfZxQMeFAjP50gwx0MCWDqhag7zXOi4+2FtZ6Iv+FOPchKusYQTDo/xCNwfBsmcmKgyvhDXXMtSXJMzUz/YYqFMOetdSqbquAeHpzTbJYezcJeBxO/q0d0XCoxwc47KOU3/Lxf0dR2iQm9shLID1tdpw69lLs8NEGzbuRdE17kcjFrGGFtK3zqLY9yEnuRqMX0gTvugg0C70dlArUBcadTEM3KfGzGgb2DC+QDSFWe88ThHHhWsjmlQCcJiHykibnU8ccvFjfzozHcyR2Gby/XK/g3G5xC6W1vlJatwEkxJ7c0lim6xKM9fmRHzhUVE+w3XOhYS0Uib9gzmfHMIdOej+ABXPRNC9Q29068X7OZuD07XaF3HOTHIQZmn98RE0xbC4eOSD3cL6KYrH1LtEZVW/BNsvXupQRYkdhnzmDeHekK7EyrF8TjutTcJEP8CvtgZjy8UNO7imkBKqlu73z96CCQZDFzhiWanZNxQcmkNAMdI1gAu6eSoD1qX5PojEB7rqJiHRP1zTXmCaY5Ea8KN9sknI8DtxCgu9zxxJ2dPD5j2iBMeaT7B1vTTiB3H4H59CewVTa07/qhhl/ArdkFTeQyTyiFm3tBuh/TVEGACLW+89D6taP9RNl/IOEtzHzmZ88d0KSKhWvTW05o5oX92f4NL41v+IKCevfhf3K6rC3Fxgwf/jEgECvso8j2CWSoDSEZB7QrshrIV1R7xZA0I3TlRFPvS3WdsF8tgr0ghWIqEc1DvK4o/hKOXdina/eP2WFeATvZZV8LUzJTQJiCOtGrbqza5OqHX3t/FSbBSNHuiTZRlzqA7/e58xBgB.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1vcHVzLTUuNS0yMDI2MDkyMXxjbGF1ZGUtb24tYXdzIn0"
+        }
+      ]
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "query_records",
+      "args": {
+        "soql": "SELECT Id, Name, Account.Name, StageName, Amount, CloseDate, Sales_Rep__c, LastActivityDate, LastModifiedDate, Probability FROM Opportunity WHERE IsClosed = false ORDER BY CloseDate ASC"
+      },
+      "output": "{\"total_rows\": 27, \"records\": [{\"Id\": \"006g800000A2fuOAAR\", \"Name\": \"Massive Dynamic - Lab Systems\", \"Account.Name\": \"Massive Dynamic\", \"StageName\": \"Perception Analysis\", \"Amount\": 120000.0, \"CloseDate\": \"2026-09-06\", \"Sales_Rep__c\": \"Enterprise Team\", \"LastActivityDate\": \"2026-08-02\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 70.0}, {\"Id\": \"006g800000A2fuLAAR\", \"Name\": \"Soylent Foods - Supply Chain Suite\", \"Account.Name\": \"Soylent Foods\", \"StageName\": \"Negotiation/Review\", \"Amount\": 41000.0, \"CloseDate\": \"2026-09-16\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-08-22\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 90.0}, {\"Id\": \"006g800000A2fuKAAR\", \"Name\": \"Umbrella Health - Patient Portal\", \"Account.Name\": \"Umbrella Health\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 54000.0, \"CloseDate\": \"2026-10-01\", \"Sales_Rep__c\": \"Dana\", \"LastActivityDate\": \"2026-08-12\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 75.0}, {\"Id\": \"006g800000A2fuNAAR\", \"Name\": \"Cyberdyne - Edge Devices\", \"Account.Name\": \"Cyberdyne Systems\", \"StageName\": \"Id. Decision Makers\", \"Amount\": 66000.0, \"CloseDate\": \"2026-10-11\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-09-01\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 60.0}, {\"Id\": \"006g800000A2funAAB\", \"Name\": \"Cyberdyne - Support Renewal\", \"Account.Name\": \"Cyberdyne Systems\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 22000.0, \"CloseDate\": \"2026-10-30\", \"Sales_Rep__c\": \"Luis\", \"LastActivityDate\": \"2026-10-15\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 75.0}, {\"Id\": \"006g800000A2fuXAAR\", \"Name\": \"Hooli - Enterprise License\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"LastActivityDate\": \"2026-10-20\", \"LastModifiedDate\": \"2026-10-22T03:51:28.000+0000\", \"Probability\": 90.0}, {\"Id\": \"006g800000A2fuMAAR\", \"Name\": \"Van"
+    },
+    {
+      "tool": "create_record",
+      "args": {
+        "object": "Task",
+        "fields": {
+          "Subject": "Follow up: close date passed (Sep 6) \u2013 update close date or close out",
+          "Status": "Not Started",
+          "ActivityDate": "2026-10-23",
+          "WhatId": "006g800000A2fuOAAR",
+          "Sales_Rep__c": "Enterprise Team",
+          "Description": "Close date of 2026-09-06 has passed and no activity since 2026-08-02. Re-engage the customer and update the close date/stage, or mark Closed Lost."
+        }
+      },
+      "output": "{\"success\": true, \"id\": \"00Tg8000006cnInEAI\"}"
+    },
+    {
+      "tool": "create_record",
+      "args": {
+        "object": "Task",
+        "fields": {
+          "Subject": "Follow up: close date passed (Sep 16) \u2013 update close date or close out",
+          "Status": "Not Started",
+          "ActivityDate": "2026-10-23",
+          "WhatId": "006g800000A2fuLAAR",
+          "Sales_Rep__c": "Luis",
+          "Description": "Close date of 2026-09-16 has passed and no activity since 2026-08-22. Re-engage the customer and update the close date/stage, or mark Closed Lost."
+        }
+      },
+      "output": "{\"success\": true, \"id\": \"00Tg8000006cnKPEAY\"}"
+    },
+    {
+      "tool": "create_record",
+      "args": {
+        "object": "Task",
+        "fields": {
+          "Subject": "Follow up: close date passed (Oct 1) \u2013 update close date or close out",
+          "Status": "Not Started",
+          "ActivityDate": "2026-10-23",
+          "WhatId": "006g800000A2fuKAAR",
+          "Sales_Rep__c": "Dana",
+          "Description": "Close date of 2026-10-01 has passed and no activity since 2026-08-12. Re-engage the customer and update the close date/stage, or mark Closed Lost."
+        }
+      },
+      "output": "{\"success\": true, \"id\": \"00Tg8000006cnM1EAI\"}"
+    },
+    {
+      "tool": "create_record",
+      "args": {
+        "object": "Task",
+        "fields": {
+          "Subject": "Follow up: close date passed (Oct 11) \u2013 update close date or close out",
+          "Status": "Not Started",
+          "ActivityDate": "2026-10-23",
+          "WhatId": "006g800000A2fuNAAR",
+          "Sales_Rep__c": "Luis",
+          "Description": "Close date of 2026-10-11 has passed and no activity since 2026-09-01. Re-engage the customer and update the close date/stage, or mark Closed Lost."
+        }
+      },
+      "output": "{\"success\": true, \"id\": \"00Tg8000006cnNdEAI\"}"
+    },
+    {
+      "tool": "create_record",
+      "args": {
+        "object": "Task",
+        "fields": {
+          "Subject": "Follow up: stale deal \u2013 re-qualify or move close date",
+          "Status": "Not Started",
+          "ActivityDate": "2026-10-23",
+          "WhatId": "006g800000A2fuMAAR",
+          "Sales_Rep__c": "Priya",
+          "Description": "No activity since 2026-07-18, still in Qualification with a 2026-11-05 close date. Re-engage and re-qualify, or update the close date."
+        }
+      },
+      "output": "{\"success\": true, \"id\": \"00Tg8000006cnPFEAY\"}"
+    },
+    {
+      "tool": "create_record",
+      "args": {
+        "object": "Task",
+        "fields": {
+          "Subject": "Follow up: closing Oct 30 \u2013 confirm on track",
+          "Status": "Not Started",
+          "ActivityDate": "2026-10-23",
+          "WhatId": "006g800000A2funAAB",
+          "Sales_Rep__c": "Luis",
+          "Description": "Deal is in Proposal/Price Quote and due to close 2026-10-30. Confirm the customer is on track to sign."
+        }
+      },
+      "output": "{\"success\": true, \"id\": \"00Tg8000006cnQrEAI\"}"
+    },
+    {
+      "tool": "create_record",
+      "args": {
+        "object": "Task",
+        "fields": {
+          "Subject": "Follow up: closing Nov 2 \u2013 confirm on track",
+          "Status": "Not Started",
+          "ActivityDate": "2026-10-23",
+          "WhatId": "006g800000A2fuXAAR",
+          "Sales_Rep__c": "Enterprise Team",
+          "Description": "$310K deal in Negotiation/Review due to close 2026-11-02. Confirm remaining steps to signature."
+        }
+      },
+      "output": "{\"success\": true, \"id\": \"00Tg8000006cnSTEAY\"}"
+    },
+    {
+      "tool": "create_record",
+      "args": {
+        "object": "Task",
+        "fields": {
+          "Subject": "Follow up: add Amount to opportunity",
+          "Status": "Not Started",
+          "ActivityDate": "2026-10-23",
+          "WhatId": "006g800000A2fuDAAR",
+          "Sales_Rep__c": "Luis",
+          "Description": "Opportunity has no Amount, so it can't be forecast or closed won. Estimate and enter the deal value."
+        }
+      },
+      "output": "{\"success\": true, \"id\": \"00Tg8000006cnU5EAI\"}"
+    }
+  ]
+}

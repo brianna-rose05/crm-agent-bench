@@ -1,0 +1,160 @@
+{
+  "row": {
+    "model": "anthropic/claude-haiku-5.5",
+    "run": 1,
+    "task": 37,
+    "title": "Bulk date change in a window",
+    "category": "verification",
+    "passed": true,
+    "note": "moved exactly the 3 deals in the window",
+    "steps": 3,
+    "tool_calls": 4,
+    "writes": 3,
+    "user_turns": 1,
+    "cost_usd": 0.00122,
+    "user_sim_cost_usd": 0.0,
+    "stopped": "answered",
+    "providers": "Claude Platform on AWS"
+  },
+  "final_reply": "I found three open Luis opportunities with close dates in the next 30 days, and I pushed each one out by 14 days:\n\n| Opportunity | Stage | Amount | Old close date | New close date |\n|---|---|---|---|---|\n| Cyberdyne - Support Renewal | Proposal/Price Quote | $22,000 | 2026-10-30 | 2026-11-13 |\n| Globex - Platform Expansion | Negotiation/Review | $85,000 | 2026-11-10 | 2026-11-24 |\n| Globex - Training Credits | Negotiation/Review | $8,000 | 2026-11-19 | 2026-12-03 |\n\nAll three updates succeeded. I only changed close dates and didn't touch any other fields.",
+  "agent_replies": [
+    "I found three open Luis opportunities with close dates in the next 30 days, and I pushed each one out by 14 days:\n\n| Opportunity | Stage | Amount | Old close date | New close date |\n|---|---|---|---|---|\n| Cyberdyne - Support Renewal | Proposal/Price Quote | $22,000 | 2026-10-30 | 2026-11-13 |\n| Globex - Platform Expansion | Negotiation/Review | $85,000 | 2026-11-10 | 2026-11-24 |\n| Globex - Training Credits | Negotiation/Review | $8,000 | 2026-11-19 | 2026-12-03 |\n\nAll three updates succeeded. I only changed close dates and didn't touch any other fields."
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "Push every open deal of Luis's with a close date in the next 30 days out by two weeks."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_019TLXKS7p7u3Tcfpt1NeADU",
+          "function": {
+            "name": "query_records",
+            "arguments": "{\"soql\": \"SELECT Id, Name, CloseDate, StageName, Amount FROM Opportunity WHERE Sales_Rep__c = 'Luis' AND IsClosed = false AND CloseDate >= 2026-10-21 AND CloseDate <= 2026-11-20 ORDER BY CloseDate\"}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "CAQShgcKEAgTGAI4AUIIdGhpbmtpbmcSDG566fbXA+vd+i81+RoMOkNerjWT/mzfPyobIjAjxYB5+WVsTXY1bUmM1NzMJhr0a6uTxSSybARy13TA65fkMNwE/VTlzESCTmgaycsqowaI4x49lyjxFsIocRNIOdfSY80MrqMIceEo34JtzFK3MIwIizisLVP20IG+j1x/XPyEjoFjegzmuP2UhkuYJB400s6Ih4z5ruJYH9jxpLVEGDS/csiOlt+hlhfkHTd8Iy5r7jJQ0n+gV0lO2tpVGPuHPjuuJvUMrjVE5W/xMqQ97Fac6cRRDq5eazoN/noH7rO/t1jSuNKufbHJOhXabC0JYnnDNbKy+n2oGjwqIwm/Vw+wxqAPzxVg/eXmJ68gwTHRfz//vTU/Qjkc6KXZovFEwWjPKdfiXQLiJfgy7ki2VuHVyBxNGdIkw1jKC277Wm2PavMEEstzs9gxCmMh6CFeimxJQgSxoZ/VcUeEIxaylBrHj/fcL4DlipZe7MEs4TBlJx6/YVJAjX8ek4o+Iemni663HEVTYyR0JcPz4mn8N5zSZC3+RVM5n1zx7tV+Zwn1Rhn6KI3weHCNqXA/eLpS1mlGfRGU0Mro8iSmINThH0Vs5LquvdLbkjlbreihsCC8BJMoAhcNkGBqIKc43JVJokkvkIBWj8VIm0uhgptQS/MApo/SmJd8W3juGMFkWlcOg/NxLXVZIyedGWMZkR4zEyCjjUzl7hJ6KjomGhRqMY3AxLmsfNC6Ga8mcesCf3wBsxlyTxU+pBq1oqQUo7koqSrnnAy/7ZI3yMwqO5o/MiqFhBI55dfApF5oBwf8FZejkFD/1k79Q9CZquWPMcvvyYthQYPkOy9Y4VYXI7RG/8GLt+QwPAQYcKOO9BNVontrwC7YeJCH8PBslPDV9BJsfXEthbx71ygacqI3XjZwffX+PfYmSlXC8SIgAGcpErUJ6E3DW3t5TptispFs2wieuHM2h08159JtBSwrHZcFw8aDveTLVfpNf9K9Fe6sUj7LHaUsw3ZBj0aWyUmKuJtV/ShB/TuK8DCT71YuwbsSCtJky6OTW6eCQV4uztn5p7QmnZfMcxFhJisJFhNg89vFzrC4+wn3EbTtiZv9dstTuS23WBWIy8QEgGo2zGp5FPRYtoxmhfj/Bo7kWQEB7MwNjz0byO8XF2hoI/7WdxyBuolK2RgB.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS01LjUtMjAyNjEwMDd8Y2xhdWRlLW9uLWF3cyJ9",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_019TLXKS7p7u3Tcfpt1NeADU",
+      "content": "{\"total_rows\": 3, \"records\": [{\"Id\": \"006g800000A17gfAAB\", \"Name\": \"Cyberdyne - Support Renewal\", \"CloseDate\": \"2026-10-30\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 22000.0}, {\"Id\": \"006g800000A17g3AAB\", \"Name\": \"Globex - Platform Expansion\", \"CloseDate\": \"2026-11-10\", \"StageName\": \"Negotiation/Review\", \"Amount\": 85000.0}, {\"Id\": \"006g800000A17ggAAB\", \"Name\": \"Globex - Training Credits\", \"CloseDate\": \"2026-11-19\", \"StageName\": \"Negotiation/Review\", \"Amount\": 8000.0}]}"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01WoVwGbCdbcYpNcN8GuzvNv",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A17gfAAB\", \"fields\": {\"CloseDate\":\"2026-11-13\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 1,
+          "id": "toolu_01XeojX3NDUPZq5Fs35nE1q8",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A17g3AAB\", \"fields\": {\"CloseDate\":\"2026-11-24\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 2,
+          "id": "toolu_01Hm6jiBqF55Xa9fAhJ1B9fr",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A17ggAAB\", \"fields\": {\"CloseDate\":\"2026-12-03\"}}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "CAQS4QYKEAgTGAI4AUIIdGhpbmtpbmcSDO40VL6X2pfXnIBphRoM7XGJj0ChUX9p7PJXIjAzsMjN2oogBpLywWOVc5HZkR9uZWuw7l9bEX4MhLy7MOL2GY8ex1BxVuBgGCRb/joq/gUTG19dw/5t1c0yFeKKXForcbNgcGgConekNXMmoPLkTo1vB8yMPpaQgb4+ORflT0b1pu2KCZi/zhzsWOBIiluwCjFTOnBTGogvvaAT9GEFyzLEVo/ZnaNwGdOZrPFzJpCns4J1z0BoO4fuN+JGHCFKpfRWKbkng2QFb2N+6BxhXqIlB3t51kNsVVpTGcFqL6zzKJ1YDAQvJ16gjEcu/vrgyWmMEoN1t5M0c8mr4Ia65PmTeJoJgJiLwrUW1GObaqnAeFppCRilfp+kXCrbrSkuYB2Nz9Af2f2EZ9gilFygrL2fPExrnIYuFLBaSS8vjJNX4DV9DgQx30Rm2GLHyYev2zGNvIqSjrvxsCDhoSiAS5bUZCVtMZw5bACPqrwmRjI425iBdK2cAxdL7YjL3CXqD8hBQdL+6VotCCfaVFKnzUPlc9eVBbXTG040B7jdXAfwbNjDVdMCFCeMnBI3Fm6VLeV4kUo8SIJOJmcM2MFJyuqsoi3OeF7y58ZvzSfjH+7xyokeHJfJGMhUqJFDl7P/5IJazSkiLao8lMH8qgERVkyR4vply384pzwLREwJKIJApXQ82mfjLH1lrY3lUx7drJKBiTYB3Qf+XIF8pg+BER16WfcURa5uasJ72vO0KqW45NXmckxH62xNVvKGRsG1+EuYZo0O3HsNibOMRm0WZqZhKr/TL0a/j4cxzydBOzMdY5EBHxn7xcqK4fhHUisO3MspPAJ+OsM3NaS/leDHB1pzPdrxaWgWpXnmqdHe14NGkC19GyeEO6peu0wpwNLP3JCZm583BnhKnvOHUz7oQ038yqgdY51GR/6G8LLSmp4pW7utwcB2C/oVw+zEqoCcN2+Pp3WwGfcwmXx/khJKCZEIOrU3WE8SwK9xOXnr8g/FY7bLOoA5mFHAif7Z1eS9LnZiUAwSIyJoNDt2v/TZ+sa8UyW94g0EC8qOKqfrKbsYkX2Omc9prnuMVSo6xngEa0drua1wPoLtCMD5aUd7+Li9Zoc98tOcA6VHi7ulGAE=.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS01LjUtMjAyNjEwMDd8Y2xhdWRlLW9uLWF3cyJ9",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01WoVwGbCdbcYpNcN8GuzvNv",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01XeojX3NDUPZq5Fs35nE1q8",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01Hm6jiBqF55Xa9fAhJ1B9fr",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "I found three open Luis opportunities with close dates in the next 30 days, and I pushed each one out by 14 days:\n\n| Opportunity | Stage | Amount | Old close date | New close date |\n|---|---|---|---|---|\n| Cyberdyne - Support Renewal | Proposal/Price Quote | $22,000 | 2026-10-30 | 2026-11-13 |\n| Globex - Platform Expansion | Negotiation/Review | $85,000 | 2026-11-10 | 2026-11-24 |\n| Globex - Training Credits | Negotiation/Review | $8,000 | 2026-11-19 | 2026-12-03 |\n\nAll three updates succeeded. I only changed close dates and didn't touch any other fields."
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "query_records",
+      "args": {
+        "soql": "SELECT Id, Name, CloseDate, StageName, Amount FROM Opportunity WHERE Sales_Rep__c = 'Luis' AND IsClosed = false AND CloseDate >= 2026-10-21 AND CloseDate <= 2026-11-20 ORDER BY CloseDate"
+      },
+      "output": "{\"total_rows\": 3, \"records\": [{\"Id\": \"006g800000A17gfAAB\", \"Name\": \"Cyberdyne - Support Renewal\", \"CloseDate\": \"2026-10-30\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 22000.0}, {\"Id\": \"006g800000A17g3AAB\", \"Name\": \"Globex - Platform Expansion\", \"CloseDate\": \"2026-11-10\", \"StageName\": \"Negotiation/Review\", \"Amount\": 85000.0}, {\"Id\": \"006g800000A17ggAAB\", \"Name\": \"Globex - Training Credits\", \"CloseDate\": \"2026-11-19\", \"StageName\": \"Negotiation/Review\", \"Amount\": 8000.0}]}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A17gfAAB",
+        "fields": {
+          "CloseDate": "2026-11-13"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A17g3AAB",
+        "fields": {
+          "CloseDate": "2026-11-24"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A17ggAAB",
+        "fields": {
+          "CloseDate": "2026-12-03"
+        }
+      },
+      "output": "{\"success\": true}"
+    }
+  ]
+}

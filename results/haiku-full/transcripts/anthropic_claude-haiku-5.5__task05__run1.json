@@ -1,0 +1,69 @@
+{
+  "row": {
+    "model": "anthropic/claude-haiku-5.5",
+    "run": 1,
+    "task": 5,
+    "title": "Find missing fields (read-only)",
+    "category": "data_quality",
+    "passed": true,
+    "note": "correct",
+    "steps": 2,
+    "tool_calls": 1,
+    "writes": 0,
+    "cost_usd": 0.00055,
+    "stopped": "answered",
+    "providers": "Claude Platform on AWS"
+  },
+  "final_reply": "One open opportunity is missing an amount: **Initech - Pilot** (Stage: Prospecting, Close Date: 2026-12-19). It has a close date but no amount. No open opportunities are missing a close date. I haven't changed anything.\n\nANSWER: Initech - Pilot",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-20 (Tuesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "Which open opportunities are missing an amount or a close date? Just list them; don't change anything.\n\nEnd your reply with one final line in exactly this format, listing the full opportunity names: ANSWER: <name>; <name>; ..."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01A6tn5BQ7hArLKHuXmCJdVf",
+          "function": {
+            "name": "query_records",
+            "arguments": "{\"soql\": \"SELECT Id, Name, Amount, CloseDate, StageName FROM Opportunity WHERE IsClosed = false AND (Amount = null OR CloseDate = null)\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01A6tn5BQ7hArLKHuXmCJdVf",
+      "content": "{\"total_rows\": 1, \"records\": [{\"Id\": \"006g8000009y569AAA\", \"Name\": \"Initech - Pilot\", \"Amount\": null, \"CloseDate\": \"2026-12-19\", \"StageName\": \"Prospecting\"}]}"
+    },
+    {
+      "role": "assistant",
+      "content": "One open opportunity is missing an amount: **Initech - Pilot** (Stage: Prospecting, Close Date: 2026-12-19). It has a close date but no amount. No open opportunities are missing a close date. I haven't changed anything.\n\nANSWER: Initech - Pilot",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "CAQSuwUKEAgTGAI4AUIIdGhpbmtpbmcSDEjrvrd+XEDqwLsVPxoMqnFb/gwH2/7XpOmTIjDCDH4dCyOI9b33C67nkCyciXBdzsOQMivdVU2rfelp/85PWps4JOScTlhmYyrl+V0q2ASeK0IMOdYJqParpAG7YqS4SylP89Z0PLMALMdQZ3Agh8VeEBgj5FvXKLvMacOoJpwx+Q8DwAQEKQ08kZeizFi7hHJeF7eKAMYrcGj8DlT3Z38y/o8SzyX78RqKy2/UGCWp8uVG7pR02ro8+y3h4Zux3/J3ZX/qAaWJ6TrD5jMd6WdXdSpULtuBsCp/msgOmRvuXH09aivNOPf7QEvxD2hsr5nDCmGK3xnmCgRpYiegkiGm+T1/+yi9Tu/dkYK5nV05tcGuXbNfbo8NFVQ3kD1CDAokNGVxz9bp/OiVAq2Z6cBu+JD0Oo7u+p3QKGk24xJsV+m53euD9IrYvxC2HdRmZ7FIZ9Z1S6BeNnx+fS3EvL2EKjf5Sm398eJN+192nYMwMriuJ/MxrUFkj3FOMLe2EJ8Dbax//nWtZ8rue2kafXrbzBqsqxG16fMRkgo8dqHClBn8TkNAJ0GA3oiZr7FgBqJhjqD7D1WYElPtTVjC0LFx8cMWXJRwwtwZmMjVJ2OzGePjIGaBpdxg95LrwZH1laeunW2O7+OGQ2vx5KA/8nYRr9OsR8w3IOoC6wEwMgrgmZ8vrROde9Rl+sbJQBXHfLd9ZawhRBpjRTkzZEa9YE8JsMajk5HBdMWEQdUZok+AW4i4c21QZTfSqgLVne65D1DUTd2ploqGPPNee3EufGo9695OJWDsR5UMJZjibMj507ibLwKfazgaLKwtBt3Y5cEsvg+qeebChY+E4DX4oYbsYgN6pTzJr/BN56f/ve2GiK/mEtLZbqDKNv5hJxe12DyT8bMX3+sYAQ==.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS01LjUtMjAyNjEwMDd8Y2xhdWRlLW9uLWF3cyJ9",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ]
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "query_records",
+      "args": {
+        "soql": "SELECT Id, Name, Amount, CloseDate, StageName FROM Opportunity WHERE IsClosed = false AND (Amount = null OR CloseDate = null)"
+      },
+      "output": "{\"total_rows\": 1, \"records\": [{\"Id\": \"006g8000009y569AAA\", \"Name\": \"Initech - Pilot\", \"Amount\": null, \"CloseDate\": \"2026-12-19\", \"StageName\": \"Prospecting\"}]}"
+    }
+  ]
+}

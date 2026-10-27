@@ -1,0 +1,230 @@
+{
+  "row": {
+    "model": "openai/gpt-6.1-sol",
+    "run": 1,
+    "task": 30,
+    "title": "Stage change resets probability",
+    "category": "verification",
+    "passed": true,
+    "note": "noticed the stage change reset the probability",
+    "steps": 8,
+    "tool_calls": 6,
+    "writes": 3,
+    "user_turns": 2,
+    "cost_usd": 0.01059,
+    "user_sim_cost_usd": 0.00198,
+    "stopped": "answered",
+    "providers": "OpenAI"
+  },
+  "final_reply": "Moved **Hooli - Analytics Add-on** to **Negotiation/Review**, keeping its probability at **40%** as requested.",
+  "agent_replies": [
+    "Updated **Hooli - Analytics Add-on** probability from **50% to 40%**.",
+    "Moved **Hooli - Analytics Add-on** to **Negotiation/Review**, keeping its probability at **40%** as requested."
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "Set the Hooli Analytics Add-on deal's probability to 40%, we're not that confident about it."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "call_8aaeCuRnx7ao3OhLxperjTRO",
+          "function": {
+            "name": "search_records",
+            "arguments": "{\"object\":\"Opportunity\",\"text\":\"Hooli Analytics Add-on\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_8aaeCuRnx7ao3OhLxperjTRO",
+      "content": "[]"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "call_KTcFleMfzSEAp9w7M9zBgzlV",
+          "function": {
+            "name": "search_records",
+            "arguments": "{\"object\":\"Opportunity\",\"text\":\"Hooli\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_KTcFleMfzSEAp9w7M9zBgzlV",
+      "content": "[{\"Id\": \"006g800000A1LpXAAV\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g80000156S3EAAU\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 50.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}, {\"Id\": \"006g800000A1LppAAF\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g80000156S3EAAU\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}, {\"Id\": \"006g800000A1Lq1AAF\", \"Name\": \"Hooli - 2025 Pilot\", \"AccountId\": \"001g80000156S3EAAU\", \"Account.Name\": \"Hooli\", \"StageName\": \"Closed Lost\", \"Probability\": 0.0, \"Amount\": 20000.0, \"CloseDate\": \"2026-02-23\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}]"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "call_biYwxnjqepN6NiJ0GLszRqAG",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A1LpXAAV\",\"fields\":{\"Probability\":40}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_biYwxnjqepN6NiJ0GLszRqAG",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "Updated **Hooli - Analytics Add-on** probability from **50% to 40%**."
+    },
+    {
+      "role": "user",
+      "content": "Thanks. Also move it to Negotiation/Review."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "call_1ALyLl2UYTBaaj1K6eERXcMC",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A1LpXAAV\",\"fields\":{\"StageName\":\"Negotiation/Review\"}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_1ALyLl2UYTBaaj1K6eERXcMC",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "call_guhl8o43XJ1BkUUyU2YDJc2g",
+          "function": {
+            "name": "get_record",
+            "arguments": "{\"record_id\":\"006g800000A1LpXAAV\"}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABq2RTOWLXwoMcdPTX4-uBXYGXwPJKg-nggZNG9Ffia_5KBGUX0he0UITwE6BDc8y7tMJnFF_hK7Nr7J5rj1FANf-xRvZd9RTAwlS38-dJV8k796rw-UkqSkSQf9Srm-VhsW5vePXjGXRsYibt_mpo2ffUliZN_yXLKDZMhwH0NCfdEppExyw_peIsOAe8JZcQvJrzcfhUNqxFSgC2iekC84e_za70lqtVzEPbAaGlhd9cnkrNdDDfTKgNjNw5FKyFsKRkpxWIQDsYQQD7uPoFjAiC7go1muUjxVHRuKi2W9Sp4SC_xEhuXy_9hSt12QoTR_0vCHJbLu7xOumy5_ZaEoVi9s9LCx0nLjJ8Yt_toDuRTyueFg9ERPYzMWbHrE65915qCp9mYxyt_jMgyAb0BMHb1ANsJBsatl5A51QlxrkhYxpsG7uqu_KN7iqxfkT1YX-dQSeFOUcabT6jeSljVF51qp9Tr9qEdEHSHGWbngWScFvcdDDiOp6_I6cN0j_AgBiRVwEHJcCm3MgNl3fpzXfy8UxDNEJxjzqY3htQ0xDFq_SMLNKJQBfM_tfJSD_ce8rHxb5s0XWNyBXDV9xC6oqxJdmGhzuT4hlMaVDaCvbDoLcmLyjLNSGVY8MRVM-vNODV8-OZwCzL0vlirGuf8zZF_b2Cj18bL_b_kBwKilAa9jYhNuo-_B8RyFxkN5FrbeT6juyVKkVhUen6EVbRWdejFIijF1lAC_uY2p7DPrfl-kObb5jeJUyDnPRLJyfuoy8_wG321kRR-MJVzQTdqQ_qLAVnJZ4tvhBYffJUmjCNngRLR3EjIIiQUkvI_ACwF-Ix99ICyqeddK9Q9C5c7B5RMmo1XHRDGGfRGdCtpvWunjkmhX-GePiyxxKh213d-mHFLie-eEv6ZafDX7nt7PYzkFNSFXQjkTjMLOHNa1Km23NI0gfI78Kn-VZPukjLVE4NKQEyPZ4X5xoxLjBLmdx1k-Clyash2cy5UtHR4g1CsnkDpZNhettyaJY0V-hLLOdnNrnQtwUk7sKnYqVaj9qhH2VbBvPXOzQI4ySHQQC3rFmZHcOeNMWnSImkekKtFqkV4nKjqBva_RVMJdy588h-MxIz9187mOvYkI4Ripdgg-FIrYS3WY1p-TlSQoA6JaX_93AHRvEChRcW46ZMRrEJVlChcvASPUHqPA2nKqFY2YxvEYcPOviQzjxjQXC6kvH0diUnrS5vBlEF2vh13LUw9TC_wtZL7kfkm5sU7Yp4eptXGenC4Va7JgyupsVRfqBpWejfC-bkPcAJ7YbHlZ483S3bj1MatqLkVFHfhHoj9ECl2Ece_t_zWv9eaK8VZSwNI-dWnqCsjue3_ta7bZua8rCVR-uY1fMAk9O_zgLLUwwvCgMtPIVDLmTm3LPpFjzTFeoNFpGYaBrCCB11s5qr34KkPqb52ZsBSaRoJ7CXPPkbc4ta-b7ad-zNe_qgammRIOTwqNYWAPeluv505deY7hOVc8532bqlDWjEOtMYw30R_IHkGL0wNAbhepBGG4lIlN-84OcOyN3onSexPX4Lx4z7LLDdDfMx2aQJ74xF-VRuqJ7ZqrQ4xQMbfSj9cz1-EkDT5Pww-MiEUi4bUfm7h_HDM9L0oKw3bMo724Zs1TWIx4hgr0l5x0H35yyUwIJNOX5Zyw-cVSBg9evjaYXLX39CWkuxhZ8KGEDQY45yxEd5lGUnvZ-Jqlkg2K2fzB3-cSP2AB206lI3S2L3xgnX9gQYIx8GN7xwQfBDh7cFeSBzWcm7hrLConXIB-XA1YxzFkW-s0t8POfNu1yvS1vxe50f08XlSng0KXsWjJFEcF0xahwalBVFKXi-qp8EnDuDkoYMAfFwrKG8K8Kj8ubQQQpAXDRtvMnOb4p2V3QjUiOtJRE_4N8ZKL1bPIIKSitV9aPS_lYMJwBEJbffPJRXcgFUU0Mrmlhz6ciJa6ZzRsY59i7olypGsSrcDbpn8_Oql.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LjEtc29sLTIwMjYwOTI5fG9wZW5haSJ9",
+          "format": "openai-responses-v1",
+          "id": "rs_0f5da775125e1f44016ad914cd4bac87d1b2497666f23d0e1d",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_guhl8o43XJ1BkUUyU2YDJc2g",
+      "content": "{\"Id\": \"006g800000A1LpXAAV\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g80000156S3EAAU\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "call_JmFsEFLCZP1W0HXJp98RX7Ar",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A1LpXAAV\",\"fields\":{\"Probability\":40}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_JmFsEFLCZP1W0HXJp98RX7Ar",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "Moved **Hooli - Analytics Add-on** to **Negotiation/Review**, keeping its probability at **40%** as requested."
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "search_records",
+      "args": {
+        "object": "Opportunity",
+        "text": "Hooli Analytics Add-on"
+      },
+      "output": "[]"
+    },
+    {
+      "tool": "search_records",
+      "args": {
+        "object": "Opportunity",
+        "text": "Hooli"
+      },
+      "output": "[{\"Id\": \"006g800000A1LpXAAV\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g80000156S3EAAU\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 50.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}, {\"Id\": \"006g800000A1LppAAF\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g80000156S3EAAU\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}, {\"Id\": \"006g800000A1Lq1AAF\", \"Name\": \"Hooli - 2025 Pilot\", \"AccountId\": \"001g80000156S3EAAU\", \"Account.Name\": \"Hooli\", \"StageName\": \"Closed Lost\", \"Probability\": 0.0, \"Amount\": 20000.0, \"CloseDate\": \"2026-02-23\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}]"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A1LpXAAV",
+        "fields": {
+          "Probability": 40
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A1LpXAAV",
+        "fields": {
+          "StageName": "Negotiation/Review"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "get_record",
+      "args": {
+        "record_id": "006g800000A1LpXAAV"
+      },
+      "output": "{\"Id\": \"006g800000A1LpXAAV\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g80000156S3EAAU\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A1LpXAAV",
+        "fields": {
+          "Probability": 40
+        }
+      },
+      "output": "{\"success\": true}"
+    }
+  ]
+}

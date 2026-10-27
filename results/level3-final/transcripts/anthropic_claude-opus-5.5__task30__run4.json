@@ -1,0 +1,231 @@
+{
+  "row": {
+    "model": "anthropic/claude-opus-5.5",
+    "run": 4,
+    "task": 30,
+    "title": "Stage change resets probability",
+    "category": "verification",
+    "passed": true,
+    "note": "noticed the stage change reset the probability",
+    "steps": 7,
+    "tool_calls": 6,
+    "writes": 2,
+    "user_turns": 2,
+    "cost_usd": 0.09339,
+    "user_sim_cost_usd": 0.00292,
+    "stopped": "answered",
+    "providers": "Claude Platform on AWS"
+  },
+  "final_reply": "I moved **Hooli - Analytics Add-on** to **Negotiation/Review**. I saved the stage and the probability together so the probability would stay at **40%** and not switch to the stage's default, which is usually around 90%. The record now shows both changes.\n\nThe rest of the deal is unchanged: $35,000, closing on 2026-11-30, with Priya as the Sales Rep.",
+  "agent_replies": [
+    "I changed the probability on **Hooli - Analytics Add-on** from 50% to 40%, and the record now shows 40%.\n\nThe deal is otherwise unchanged: it's in the Value Proposition stage, worth $35,000, set to close on 2026-11-30, with Priya as the Sales Rep.\n\nIf someone changes the deal's stage later, Salesforce may automatically reset the probability to that stage's default, so you may need to set it again.",
+    "I moved **Hooli - Analytics Add-on** to **Negotiation/Review**. I saved the stage and the probability together so the probability would stay at **40%** and not switch to the stage's default, which is usually around 90%. The record now shows both changes.\n\nThe rest of the deal is unchanged: $35,000, closing on 2026-11-30, with Priya as the Sales Rep."
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "Set the Hooli Analytics Add-on deal's probability to 40%, we're not that confident about it."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_015GXWiMWpEauDjqMMVnxvqw",
+          "function": {
+            "name": "search_records",
+            "arguments": "{\"object\": \"Opportunity\", \"text\": \"Hooli Analytics Add-on\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_015GXWiMWpEauDjqMMVnxvqw",
+      "content": "[]"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01Fp2kw6dLDVHr7WV4Nm94XJ",
+          "function": {
+            "name": "search_records",
+            "arguments": "{\"object\": \"Opportunity\", \"text\": \"Hooli\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01Fp2kw6dLDVHr7WV4Nm94XJ",
+      "content": "[{\"Id\": \"006g800000A2iFPAAZ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 50.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}, {\"Id\": \"006g800000A2iFhAAJ\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}, {\"Id\": \"006g800000A2iFtAAJ\", \"Name\": \"Hooli - 2025 Pilot\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Closed Lost\", \"Probability\": 0.0, \"Amount\": 20000.0, \"CloseDate\": \"2026-02-23\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}]"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01Kh6cKq98tztVCg7sx3zsYR",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A2iFPAAZ\", \"fields\": {\"Probability\":40}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01Kh6cKq98tztVCg7sx3zsYR",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01XPrEfTv18BSbFKEf2nKLKH",
+          "function": {
+            "name": "get_record",
+            "arguments": "{\"record_id\": \"006g800000A2iFPAAZ\"}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "Let me do a quick check since staging changes might reset the probability.\n\n",
+          "format": "anthropic-claude-v1",
+          "index": 0,
+          "signature": "CAQSwAUKEAgTGAI4AUIIdGhpbmtpbmcSDLXsPrflh+WQY//zMhoMXibiN5Mb+RXmjLT8IjAsOzFmmV0OlO+ypLIIMRcN3qM886PET4J1qZ99fddw3LblSEbmD83mBz0KesNg2Ssq3QRI01YpQuqOnZZGEH+v4AkkmhAgtbH5OrsVRzu3ciy81sSUSPsNSb0gx/RMkoMxrR6IpDlA+e2qoUWnZgvOL0TatPW+Wi6ybijk8dW5vtPdGRxa9kmze6Dt0QxmycOIpL19XWjPY+mOBRBMK4MbP26O+3MCVkneWRj/6SsxbJ4J3YN99fjeQhRcC2s1vdY10l35+g89XieqKCPhEppDCUPiml6eIWMuNJcZkyY2k4j3SmEJkDcnrPlD72NvJs4KYjBryk0UOgcRdi+qMge2dfU8c68pbUePq6Tibpfc72jPKK7lHbJ5MfbnXh1WGfCH1JuwzXDSfDPiJZJF5ug3kniu7xfypA/WVMEl6QgsVL4sq0+nyef1CsQbnZGIRssbEoyOPttkQwqdHzslpqC8yrywVK4XNf3qHa/RF9pKBG3Epc252G7L+SK36bGsLD7eALBztMuE94c+PrpF3W5iOL6Ej4BngFz0hGYLZG6JHzITiUvRRpSH9J9fqaLH3dCGGMjLV2VjNKt6woDgoh066RzdZl7/FDP+uegTu0hxnm4iJ5rufJDZPUCXlhqUXMaf2vQ2x3A/TLtHxO0RlJrAzU1It+lsUcdnHRlTn+4eQn4Yv5V3OqP53aqKUm9rWtmjBnDn5Hy/igtrD5IFwTcZtwryWAwWIIBPSQkjteG9zdPiFwIRdP7EeCSY54WmFseHzB4E5kQXGe3UelRfhsbpV3lrAwgixO31bjQsLwKruuUnq1XPWgYaoEwrv511ci7/dZ5sIMYo8dokEbYX0i8b8TMd8YrCcnowGRbtX943aRgB.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1vcHVzLTUuNS0yMDI2MDkyMXxjbGF1ZGUtb24tYXdzIn0"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01XPrEfTv18BSbFKEf2nKLKH",
+      "content": "{\"Id\": \"006g800000A2iFPAAZ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 40.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}"
+    },
+    {
+      "role": "assistant",
+      "content": "I changed the probability on **Hooli - Analytics Add-on** from 50% to 40%, and the record now shows 40%.\n\nThe deal is otherwise unchanged: it's in the Value Proposition stage, worth $35,000, set to close on 2026-11-30, with Priya as the Sales Rep.\n\nIf someone changes the deal's stage later, Salesforce may automatically reset the probability to that stage's default, so you may need to set it again."
+    },
+    {
+      "role": "user",
+      "content": "Thanks. Also move it to Negotiation/Review."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_013wHsJXJzZfY8nX9uy3RThb",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A2iFPAAZ\", \"fields\": {\"StageName\":\"Negotiation/Review\",\"Probability\":40}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 1,
+          "id": "toolu_016q4aBH1aPRbPa2z977PADp",
+          "function": {
+            "name": "get_record",
+            "arguments": "{\"record_id\": \"006g800000A2iFPAAZ\"}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "Changing the stage might reset probability back to a default value, so I should explicitly set probability to 40 in the same update to make sure it sticks.\n\n",
+          "format": "anthropic-claude-v1",
+          "index": 0,
+          "signature": "CAQSxwYKEAgTGAI4AUIIdGhpbmtpbmcSDLMVX2pgtfKqehX9mxoMWFGZ75DgunpOQUbnIjCwRzTcIDq8hKyxGd0I34a650pz5sfFJDEeJ0CLCssw32wLwH4Ab2scxODCgZTe3+Yq5AUO2j1lq8mZLd7i1CoNU9WWKscne0A0ZrrX9/gyB1OhSt12nCEl+oQbuYBrEWB1tE5SQnNpjqV6JYve4TVLZUmqUo3fuSs2GlRz3ICuHvZaOdTd3/kdgD3RU2/inAvomVzejA8mjTQ9TOyXgiOFKmaltjYSB0CjzUB+DrBAl/te0wWKksWUK9yJtqwVJDn3Tu2zSDoN8VaYtX5BRPBHqV6wBi5Drv7/5kLHOnNW5uyMZqPTDL3Idz4s6DYhWP0FVSF4YjlckIxlDIWRyrnv9XI2HwWKDAyHb7CSnePLqQATJ2qM/DTbfSJj9wLYK6EcaYXygnmBcPR9HyXjg9bcs4kwW7CqSQdPEKxE7nWCJwgb3y7nL67AVQAYT7YUGW/mV2EWo1rKQqgv+gB5YAWxv8ydFMxrgGoKSQwqnmspr+l29ng5rlfcjiSlOj9hMBjh1MG4vRjXiGiHqYMlika75QzbtCXBELNXlfKRUSUI4HP1yOnCdP4yDek6E5k5hIIXOSmdZIHOincCYwc9WUEn7HBGw6U4gdMLpv/jL4mQMGuKwusm3tuk6844GENjRQBwWqSi8GfXref/pB4+OWlWC9+Pjt6+H/TZtGzrfOKQkg6c5qNYbmPzk1I2ibIA+jswkXgyII8i1rXnntjibqLi3hCQC0Oi8zh2DDNWjoGxZkFcjflp7LTFw9k4BO2eNY2StbCZDkqqkWOc6hjdd1+h51NTsTWVOPH7jbn+yJnBAIfKr0ZWWmGKpYyGfl8OMRRfiFiIMHzO7Bodj+nBdZrLWpciCkfUsGZBhG6RDSN/QLzpqgB5woADErbDYK+KdAzh5OCCyyB4IGFEpFVVJKEZjr8OgEoxD0DdQb3GbUcL+ObkPYUqJrr3m21K+c4M4/2i+4SVOraVAfD0XUg7G7jG1cIq/4rZcLObzRlgEwixbO1h//C22SKrkTeSdWEojHzF1L8quqzdS9/lon//VlIHtEr/L8J4xBgB.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1vcHVzLTUuNS0yMDI2MDkyMXxjbGF1ZGUtb24tYXdzIn0"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_013wHsJXJzZfY8nX9uy3RThb",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_016q4aBH1aPRbPa2z977PADp",
+      "content": "{\"Id\": \"006g800000A2iFPAAZ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 40.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}"
+    },
+    {
+      "role": "assistant",
+      "content": "I moved **Hooli - Analytics Add-on** to **Negotiation/Review**. I saved the stage and the probability together so the probability would stay at **40%** and not switch to the stage's default, which is usually around 90%. The record now shows both changes.\n\nThe rest of the deal is unchanged: $35,000, closing on 2026-11-30, with Priya as the Sales Rep."
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "search_records",
+      "args": {
+        "object": "Opportunity",
+        "text": "Hooli Analytics Add-on"
+      },
+      "output": "[]"
+    },
+    {
+      "tool": "search_records",
+      "args": {
+        "object": "Opportunity",
+        "text": "Hooli"
+      },
+      "output": "[{\"Id\": \"006g800000A2iFPAAZ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 50.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}, {\"Id\": \"006g800000A2iFhAAJ\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}, {\"Id\": \"006g800000A2iFtAAJ\", \"Name\": \"Hooli - 2025 Pilot\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Closed Lost\", \"Probability\": 0.0, \"Amount\": 20000.0, \"CloseDate\": \"2026-02-23\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}]"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2iFPAAZ",
+        "fields": {
+          "Probability": 40
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "get_record",
+      "args": {
+        "record_id": "006g800000A2iFPAAZ"
+      },
+      "output": "{\"Id\": \"006g800000A2iFPAAZ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 40.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2iFPAAZ",
+        "fields": {
+          "StageName": "Negotiation/Review",
+          "Probability": 40
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "get_record",
+      "args": {
+        "record_id": "006g800000A2iFPAAZ"
+      },
+      "output": "{\"Id\": \"006g800000A2iFPAAZ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015IB6dAAG\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 40.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}"
+    }
+  ]
+}

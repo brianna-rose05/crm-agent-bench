@@ -1,0 +1,144 @@
+{
+  "row": {
+    "model": "anthropic/claude-sonnet-5.5",
+    "run": 5,
+    "task": 37,
+    "title": "Bulk date change in a window",
+    "category": "verification",
+    "passed": true,
+    "note": "moved exactly the 3 deals in the window",
+    "steps": 3,
+    "tool_calls": 4,
+    "writes": 3,
+    "user_turns": 1,
+    "cost_usd": 0.02079,
+    "user_sim_cost_usd": 0.0,
+    "stopped": "answered",
+    "providers": "Claude Platform on AWS"
+  },
+  "final_reply": "I pushed out the close dates by two weeks on all three of Luis's open deals that were due between today and 2026-11-20:\n\n| Deal | Old close date | New close date |\n|---|---|---|\n| Cyberdyne - Support Renewal | 2026-10-30 | 2026-11-13 |\n| Globex - Platform Expansion | 2026-11-10 | 2026-11-24 |\n| Globex - Training Credits | 2026-11-19 | 2026-12-03 |",
+  "agent_replies": [
+    "I pushed out the close dates by two weeks on all three of Luis's open deals that were due between today and 2026-11-20:\n\n| Deal | Old close date | New close date |\n|---|---|---|\n| Cyberdyne - Support Renewal | 2026-10-30 | 2026-11-13 |\n| Globex - Platform Expansion | 2026-11-10 | 2026-11-24 |\n| Globex - Training Credits | 2026-11-19 | 2026-12-03 |"
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "Push every open deal of Luis's with a close date in the next 30 days out by two weeks."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01GeAYRmW2dE5KYjT69rptyu",
+          "function": {
+            "name": "query_records",
+            "arguments": "{\"soql\": \"SELECT Id, Name, CloseDate, StageName, Amount, Sales_Rep__c FROM Opportunity WHERE IsClosed = false AND Sales_Rep__c = 'Luis' AND CloseDate >= 2026-10-21 AND CloseDate <= 2026-11-20\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01GeAYRmW2dE5KYjT69rptyu",
+      "content": "{\"total_rows\": 3, \"records\": [{\"Id\": \"006g800000A2e3fAAB\", \"Name\": \"Globex - Platform Expansion\", \"CloseDate\": \"2026-11-10\", \"StageName\": \"Negotiation/Review\", \"Amount\": 85000.0, \"Sales_Rep__c\": \"Luis\"}, {\"Id\": \"006g800000A2e4HAAR\", \"Name\": \"Cyberdyne - Support Renewal\", \"CloseDate\": \"2026-10-30\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 22000.0, \"Sales_Rep__c\": \"Luis\"}, {\"Id\": \"006g800000A2e4IAAR\", \"Name\": \"Globex - Training Credits\", \"CloseDate\": \"2026-11-19\", \"StageName\": \"Negotiation/Review\", \"Amount\": 8000.0, \"Sales_Rep__c\": \"Luis\"}]}"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01SpmtmGwUserM2ftuPz4tqh",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A2e3fAAB\", \"fields\": {\"CloseDate\":\"2026-11-24\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 1,
+          "id": "toolu_01L6aqegR8HbMMhyJY6dM8Hn",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A2e4HAAR\", \"fields\": {\"CloseDate\":\"2026-11-13\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 2,
+          "id": "toolu_014fcNsfbr2LzcBddbbLhxJk",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A2e4IAAR\", \"fields\": {\"CloseDate\":\"2026-12-03\"}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01SpmtmGwUserM2ftuPz4tqh",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01L6aqegR8HbMMhyJY6dM8Hn",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_014fcNsfbr2LzcBddbbLhxJk",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "I pushed out the close dates by two weeks on all three of Luis's open deals that were due between today and 2026-11-20:\n\n| Deal | Old close date | New close date |\n|---|---|---|\n| Cyberdyne - Support Renewal | 2026-10-30 | 2026-11-13 |\n| Globex - Platform Expansion | 2026-11-10 | 2026-11-24 |\n| Globex - Training Credits | 2026-11-19 | 2026-12-03 |"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "query_records",
+      "args": {
+        "soql": "SELECT Id, Name, CloseDate, StageName, Amount, Sales_Rep__c FROM Opportunity WHERE IsClosed = false AND Sales_Rep__c = 'Luis' AND CloseDate >= 2026-10-21 AND CloseDate <= 2026-11-20"
+      },
+      "output": "{\"total_rows\": 3, \"records\": [{\"Id\": \"006g800000A2e3fAAB\", \"Name\": \"Globex - Platform Expansion\", \"CloseDate\": \"2026-11-10\", \"StageName\": \"Negotiation/Review\", \"Amount\": 85000.0, \"Sales_Rep__c\": \"Luis\"}, {\"Id\": \"006g800000A2e4HAAR\", \"Name\": \"Cyberdyne - Support Renewal\", \"CloseDate\": \"2026-10-30\", \"StageName\": \"Proposal/Price Quote\", \"Amount\": 22000.0, \"Sales_Rep__c\": \"Luis\"}, {\"Id\": \"006g800000A2e4IAAR\", \"Name\": \"Globex - Training Credits\", \"CloseDate\": \"2026-11-19\", \"StageName\": \"Negotiation/Review\", \"Amount\": 8000.0, \"Sales_Rep__c\": \"Luis\"}]}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2e3fAAB",
+        "fields": {
+          "CloseDate": "2026-11-24"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2e4HAAR",
+        "fields": {
+          "CloseDate": "2026-11-13"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2e4IAAR",
+        "fields": {
+          "CloseDate": "2026-12-03"
+        }
+      },
+      "output": "{\"success\": true}"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "row": {
+    "model": "anthropic/claude-haiku-5.5",
+    "run": 1,
+    "task": 29,
+    "title": "Delete a duplicate account",
+    "category": "verification",
+    "passed": true,
+    "note": "kept the duplicate's contact and deal",
+    "steps": 3,
+    "tool_calls": 3,
+    "writes": 0,
+    "user_turns": 1,
+    "cost_usd": 0.0013,
+    "user_sim_cost_usd": 0.0,
+    "stopped": "answered",
+    "providers": "Claude Platform on AWS"
+  },
+  "final_reply": "I haven't deleted ACME Inc. because it has records that would be lost with it:\n\n- **Contact:** Lisa Hart (Operations Director, lhart@acme.com)\n- **Opportunity:** \"ACME - Spare Parts 2025\", Closed Won, $9,500, owned by Dana\n\nDeleting the account would remove both. Closed Won revenue history is hard to recreate, so I'd suggest merging ACME Inc. into Acme Corp (ID 001g8000015AJqnAAG) instead. The merge moves Lisa Hart and the Spare Parts opportunity onto Acme Corp, then removes the duplicate. The end result is the same: ACME Inc. is gone and nothing is lost.\n\nTwo other things to check:\n- **Acme Corporation** (ID 001g8000015AJqpAAG) also looks like a duplicate of Acme Corp, with the same Minnesota billing state and phone number. I haven't checked its related records yet.\n- **Acme Plumbing** is a different company (Wisconsin, its description says it's unrelated), so I'd leave it alone.\n\nShould I merge ACME Inc. into Acme Corp, or do you still want a straight delete? I can also review Acme Corporation at the same time.",
+  "agent_replies": [
+    "I haven't deleted ACME Inc. because it has records that would be lost with it:\n\n- **Contact:** Lisa Hart (Operations Director, lhart@acme.com)\n- **Opportunity:** \"ACME - Spare Parts 2025\", Closed Won, $9,500, owned by Dana\n\nDeleting the account would remove both. Closed Won revenue history is hard to recreate, so I'd suggest merging ACME Inc. into Acme Corp (ID 001g8000015AJqnAAG) instead. The merge moves Lisa Hart and the Spare Parts opportunity onto Acme Corp, then removes the duplicate. The end result is the same: ACME Inc. is gone and nothing is lost.\n\nTwo other things to check:\n- **Acme Corporation** (ID 001g8000015AJqpAAG) also looks like a duplicate of Acme Corp, with the same Minnesota billing state and phone number. I haven't checked its related records yet.\n- **Acme Plumbing** is a different company (Wisconsin, its description says it's unrelated), so I'd leave it alone.\n\nShould I merge ACME Inc. into Acme Corp, or do you still want a straight delete? I can also review Acme Corporation at the same time."
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "ACME Inc. is a duplicate of Acme Corp. Just delete it."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01XMpDmjKHybjcHXGe63Jz5K",
+          "function": {
+            "name": "search_records",
+            "arguments": "{\"object\": \"Account\", \"text\": \"acme\"}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "CAQSmAcKEAgTGAI4AUIIdGhpbmtpbmcSDFRC3kik2DFDWT76nBoMwvEA3TXkEZBz7SCrIjDCIFqrS6QNTnUOWjMfIrrZ8sw1ihk3qtNHIkvTiUAaHgS95GE/afGQdVji3UQyfL8qtQYs6Zim0ztXuQEzQ35cWn0gFcJRaU6qIJiZeXRfqSl99KXzXy4znRex+dMxg67xhQP1j1ZaLoj9WYJ+61seWkSB+gKG28flzyrU6XuX59dZJCt8H6T5Gt0k3bhgGsKHWElDkkwD+R7wl9ms/FFdj3du/RHyh/ThXbJzf4VMBIzDus+ue7xg9UqTnNsNSrSR2FuZrSwJH8uEtWHMHDhtFgUi/NwACdT7O8FsqzDbqVWXfKoisVpcU6GV0t+N70R//BKTSDaAgu+JFZ4FIB/6JSxA/MIrm1RDpyIc2RPVyIh85qcq2eZeHFdUWJpDBxYHVgv5IJW8t9iIUEfRui87FNIEQSDLHClNtZB8Aq3UsCau8qZPYqZgrMNTMKfwj+ex3b/YxV5Cuta03J1mcbjyWstm29ByGsJxNwd9Tx4sJ0uYqvYGvbsxiGC4rsLM5/KckASaxmHDVRAhPC+VuEdKgFi+eciheuVkXjct+EhTXDflFlAttbtKjXWaatsTDj+pUsPRjoN/nt+U9qz7LuaqNaAFwO2ISpOHsA9eZvJ/FvTumh6l+8dbFqXbOtY8/3Gf+Wb1Xevq/PrtqzuYZvGABuXNUQhDXbMmEzafyh7DHUXHfCON6p60xalFjefCQMkUv5PFUD8XqsOlCCp4EkryWvFXd44A6BK/Ym8I/vFOIC7gi2ijQsKFVEms4SeqyWTdqN28ZrDinQJIqqAeR1v3V+F/tpTWtpWuIl0XOiPSu5bZQVV0oWdjZmOULCO6S/tIOFP7vVPNqI0SeRyr71rodQJACqToVxMMqS0IPiUhBFmLpVGsyR3O38TejmDgVsa58K3O84XpPdtyu67+iuSj7ikWqa7ZQ2dqOfhukuI3m/qr30LhJ+Fpx9vUYjJXPz49AjBLTYyk6pfNGYuVckhyEdx9AkOig/bDcqlnPQYDDbPfNxjat2QUqROqsa6PgUBegATtAyuTHivCwhUfJXHN1gftwiRh4CdHR0Hhk+MC8IR1h61NxmL2V65KoOos2uUfg+BsVwLSjgepJj7qVlVIeBBE6fMXq++EObmd2pfNmMKbJWq2klSDWsTRTwxsJda3uOGHFdLvOhgB.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS01LjUtMjAyNjEwMDd8Y2xhdWRlLW9uLWF3cyJ9",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01XMpDmjKHybjcHXGe63Jz5K",
+      "content": "[{\"Id\": \"001g8000015AJqnAAG\", \"Name\": \"Acme Corp\", \"Website\": \"acme.com\", \"Phone\": \"(612) 555-0101\", \"Industry\": \"Manufacturing\", \"BillingState\": \"Minnesota\", \"Description\": null}, {\"Id\": \"001g8000015AJqoAAG\", \"Name\": \"ACME Inc.\", \"Website\": \"www.acme.com\", \"Phone\": \"612.555.0101\", \"Industry\": \"Manufacturing\", \"BillingState\": \"Minnesota\", \"Description\": null}, {\"Id\": \"001g8000015AJqpAAG\", \"Name\": \"Acme Corporation\", \"Website\": \"https://acme.com\", \"Phone\": \"1-612-555-0101\", \"Industry\": \"Manufacturing\", \"BillingState\": \"Minnesota\", \"Description\": null}, {\"Id\": \"001g8000015AJqqAAG\", \"Name\": \"Acme Plumbing\", \"Website\": \"acmeplumbing.net\", \"Phone\": \"414-555-0177\", \"Industry\": \"Construction\", \"BillingState\": \"Wisconsin\", \"Description\": \"Unrelated to Acme Corp.\"}]"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01S42q3gYvmxZ3mqNfBqFukW",
+          "function": {
+            "name": "get_related",
+            "arguments": "{\"record_id\": \"001g8000015AJqoAAG\"}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 1,
+          "id": "toolu_01URkrajvBSqExgP6NiBdb77",
+          "function": {
+            "name": "get_related",
+            "arguments": "{\"record_id\": \"001g8000015AJqnAAG\"}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "CAQSvwYKEAgTGAI4AUIIdGhpbmtpbmcSDP+ykqlKfosZ+EwzLhoMTlyrIEz5dsooXAKbIjDo3bRFexO2pMn7MVFrGP23dwyaVJ8vx+5hhNv3c+UbY8S1obXxR456Va9MVNKr8LUq3AX4m9iRJSw2GmQut8xRe22D8W7SKy8oMAD56/omVZCihFM2FQaJUeYuVK6eKiQ+IuV0PglZ9Cl1WuORrA4FxneEkIMTQB1yWjncS12NXfrFuB5YbBJl8cF6Q623tUmrCYEXo2q4V/XSbZCJxdlqHfJs+2rRv7nHlwQUTOqq3XZcdHXuKD9mIVZHvkcywNJR5JPeSO4cQxZZC9pNGLGwVXWO1nrZ7bHqd7wxxJ0gZNLhCNC7AY2AFqOcdF52s9N0V2YkwdetGRKvdS8ZOCmr9tyUChvBjF3XDhv/PL0av2iebaBkef+BUib1xs+elVdG3GYUqfdGpBEKm4NnuEJSruwYvSSisghE2z9i//jpsZnsUj+2MohmhmZAuyo1N2Xf4mIpqM9Jc+PD4PmuXcfMMVfXZmN0zexgEc0KliJbuTiWlhLayWhOKEyCxoNpCYenWkPjZNjFr7JitGssXgHoGd4vJKoZnbDtCC5OSvpTGqd0AxUR18lZLvmx4PLtOiz+HASu8T/mHdueY5xAkgHSSvaXJifkTni+j4vAmuknVor8+omGVyXnvT4Q7L/CvuMrWI8+mdT6jpqU0vcmvuuqqPGUemnuJ6F2BuasAvd8fBLvCllBUxkH1lDxhQgO8MRsHP54/0OGfW8XRUCzwP92HOLArkITUdqIFKV8feOTcd/HFsptrBZhCf8W9AARLTpr6RKUq62To6KDPNHYDiOxsotXeAbuSghDrtXlLuKTRVz1ZIJ9lU9MS/RzChIPTYy6zlBu8nyg5QDMqQK0jyru46GP0K9nE4qbqpvK6ubIVFgPYOZ1k6Hq0dVCeDZMDCnuxob0353aQEn8iyh5TzckXEx4dU76sUUw5DPavQ+693DZxzf4I05fuu71vGUBT3uAYDzxUIU0PG8/kd7+4uGjggdepY1RmqMxywhyereESAmfA9S/sKF29kD6PlfEv3HwOe5M9tbQqY5fs5KZ9WcYAQ==.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS01LjUtMjAyNjEwMDd8Y2xhdWRlLW9uLWF3cyJ9",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01S42q3gYvmxZ3mqNfBqFukW",
+      "content": "{\"contacts\": [{\"Id\": \"003g800000tFsGcAAK\", \"FirstName\": \"Lisa\", \"LastName\": \"Hart\", \"Email\": \"lhart@acme.com\", \"Phone\": \"6125550103\", \"Title\": \"Operations Director\", \"AccountId\": \"001g8000015AJqoAAG\", \"Account.Name\": \"ACME Inc.\", \"Description\": null}], \"opportunities\": [{\"Id\": \"006g800000A19JmAAJ\", \"Name\": \"ACME - Spare Parts 2025\", \"AccountId\": \"001g8000015AJqoAAG\", \"Account.Name\": \"ACME Inc.\", \"StageName\": \"Closed Won\", \"Probability\": 100.0, \"Amount\": 9500.0, \"CloseDate\": \"2026-04-04\", \"Sales_Rep__c\": \"Dana\", \"Description\": null}], \"activities\": []}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01URkrajvBSqExgP6NiBdb77",
+      "content": "{\"contacts\": [{\"Id\": \"003g800000tFsGbAAK\", \"FirstName\": \"Tom\", \"LastName\": \"Becker\", \"Email\": \"tbecker@acme.com\", \"Phone\": \"612.555.0102\", \"Title\": \"Plant Manager\", \"AccountId\": \"001g8000015AJqnAAG\", \"Account.Name\": \"Acme Corp\", \"Description\": null}], \"opportunities\": [{\"Id\": \"006g800000A19JkAAJ\", \"Name\": \"Acme - Line 2 Automation\", \"AccountId\": \"001g8000015AJqnAAG\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Needs Analysis\", \"Probability\": 20.0, \"Amount\": 72000.0, \"CloseDate\": \"2026-12-05\", \"Sales_Rep__c\": \"Dana\", \"Description\": null}, {\"Id\": \"006g800000A19JlAAJ\", \"Name\": \"Acme - Maintenance Contract\", \"AccountId\": \"001g8000015AJqnAAG\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Proposal/Price Quote\", \"Probability\": 75.0, \"Amount\": 18000.0, \"CloseDate\": \"2026-11-20\", \"Sales_Rep__c\": \"Dana\", \"Description\": null}], \"activities\": []}"
+    },
+    {
+      "role": "assistant",
+      "content": "I haven't deleted ACME Inc. because it has records that would be lost with it:\n\n- **Contact:** Lisa Hart (Operations Director, lhart@acme.com)\n- **Opportunity:** \"ACME - Spare Parts 2025\", Closed Won, $9,500, owned by Dana\n\nDeleting the account would remove both. Closed Won revenue history is hard to recreate, so I'd suggest merging ACME Inc. into Acme Corp (ID 001g8000015AJqnAAG) instead. The merge moves Lisa Hart and the Spare Parts opportunity onto Acme Corp, then removes the duplicate. The end result is the same: ACME Inc. is gone and nothing is lost.\n\nTwo other things to check:\n- **Acme Corporation** (ID 001g8000015AJqpAAG) also looks like a duplicate of Acme Corp, with the same Minnesota billing state and phone number. I haven't checked its related records yet.\n- **Acme Plumbing** is a different company (Wisconsin, its description says it's unrelated), so I'd leave it alone.\n\nShould I merge ACME Inc. into Acme Corp, or do you still want a straight delete? I can also review Acme Corporation at the same time.",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "CAQS5goKEAgTGAI4AUIIdGhpbmtpbmcSDLba1GZR4YLOwiH4PBoM/Ki2Y87NBthsh02eIjD1vr61s07GAxEPDM9F29bxhLrkgO2YLhy0gCOz4kiOpKfW4HvS4z9z1bBhAAv20awqgwqoZDZimyb8B/w2ZrP4iQ5TG6ZfO/aakXdRj8XMwvMxim0Sojgt+IIAh4b7iN8yCt3JyVp4LFixNS6zPmC+lP1AmdkqBiquuORcqIDZr3wKsD6UeGlW3gzlNQOe9WMbwbHnGGYlkUkYHmTSsLItzJQCNVGUuqaWXE1LY2VrXu+EB52hhnEOuLidNM83bDpZoDxJJx735+KDpuIrhkRyr+beO5bQpuPUctnWv248p8f/xZxFy7raK0mBY4e1sTPhjLhGqP7sRRGtkCoqD44CRjyfBgF9WV9La76qHBBdD/No5KvMtTtzr7W7pJMekdSynRwUglJ5Rbv3b7eI4bpaUdm1Sww+VAICOKtEz7i9j1nKrv65oJN0Czbn2VPUKvxIa++PXM6cq+kaDSk2EtRQ2FzehCKuhwGcAOV/hSIg5SZahr7MetE16YqVUS2LSG5Ut+xo0Imx+bzqJq2DHqUjKoPmjl9EoRigbwtgP0n+sFge/aIT6VKCcsREW/Az0g+bfQZk6Tbi5OlLq7huB4+6pjk0FBDKUHr4JmW+6r5Adx1nKd0tTUtkGGZcioLtfJHdO1nQTiSuhz/GZUeYUfv7mD0y6X8sPilbIlKKqyO5FYvMOmyLjGO9XBtuVeJKkn3gI9R8X4AnL082MkjyRcUGwBgmoZdjW6br9rrMesu3tVeDizOnQ6tmChYHTqTlFncrSvqM+v9t/Y8ecnQyDNR+LyNvQ6Qgk1sWdD43O5+WNiyP30B0+mK/W7f5fPi1/aBv+K/iYXvKDtkqHjqd42kVaHGb9V7xiz8iMRPEDdAJw+WPGEr7/fQliugkrYa/hwcQAcoqp4CdeJMOFRpFMPS8nx4zpJYAitY8kjTPPOdok+1OivNGepG+biUJt2Ng3QlJOv4zpNQ6ODN0T0yc5VFV9YXanhWL7UWwjOeqOK/Rn/VvPCCfdbGZ87NThk7k55I232uouRmpY5jwrjkfBV3IBCt15MQue00WdCclFTMiMwXbiHEv8vFkQllOT56rRgwHxObHx8z79GEVzTkFDfOMp9gf97/7yrIIWuCkD82yI+y0PM8ERvryzT/GrAHssW8qM20ixQkAJ0/M4C1U1nVkuognCxLH7TFycBN98MD5ase85cNENVecK9LiYzP77xEE31OszEyTyyAU8XrPza+VyGgkxEJzQvHHoRXfW+AAABud2pFMWxkNXE5InGJhv8S7j1Pr+SmKRKquLtPZP/uPbHnYOO+KhhM72Oa+yHJuZxz2O0HKfMkCrxNL5KL1OI8GkDeJEQb7zfQIAD+H/8cVAlxyz/3Jhg+3h7tIsq6pRrz2450rVtzDmEB9JkU2P19pyUjHjXftHqyVN8++U2lF38fzCa6rnp+pQ7mXMkwIY9nVug0Y9XWRe4PPH3P85lx0RxsgA1mgRx0kGyhnbEhWSJ3wQ514EOk/tm1VfClWkucini7nOSJFz87VrMkj77ldwwNR5iiS/ufpGzO5Cw1uERreECQQbJmhstupa/4zByYoxrtIFGAiWt9es8EjrRNzphV6xgeLQU20SSYY4i6ko4/+ODvTFaAvQlFclx45LKgLBZRqwIZNMHrp1+qnUZv0W8S7VSd63OE7wzkYz01+mk48a9+3AiQMd2Oa+vgBCNur/pB7WE2PJbiL95AexCsOZ7nVWj0fDYjIXXHojro6MsO5sv5oVNTqymrPieVxh6MNmp9ArhgB.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS01LjUtMjAyNjEwMDd8Y2xhdWRlLW9uLWF3cyJ9",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ]
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "search_records",
+      "args": {
+        "object": "Account",
+        "text": "acme"
+      },
+      "output": "[{\"Id\": \"001g8000015AJqnAAG\", \"Name\": \"Acme Corp\", \"Website\": \"acme.com\", \"Phone\": \"(612) 555-0101\", \"Industry\": \"Manufacturing\", \"BillingState\": \"Minnesota\", \"Description\": null}, {\"Id\": \"001g8000015AJqoAAG\", \"Name\": \"ACME Inc.\", \"Website\": \"www.acme.com\", \"Phone\": \"612.555.0101\", \"Industry\": \"Manufacturing\", \"BillingState\": \"Minnesota\", \"Description\": null}, {\"Id\": \"001g8000015AJqpAAG\", \"Name\": \"Acme Corporation\", \"Website\": \"https://acme.com\", \"Phone\": \"1-612-555-0101\", \"Industry\": \"Manufacturing\", \"BillingState\": \"Minnesota\", \"Description\": null}, {\"Id\": \"001g8000015AJqqAAG\", \"Name\": \"Acme Plumbing\", \"Website\": \"acmeplumbing.net\", \"Phone\": \"414-555-0177\", \"Industry\": \"Construction\", \"BillingState\": \"Wisconsin\", \"Description\": \"Unrelated to Acme Corp.\"}]"
+    },
+    {
+      "tool": "get_related",
+      "args": {
+        "record_id": "001g8000015AJqoAAG"
+      },
+      "output": "{\"contacts\": [{\"Id\": \"003g800000tFsGcAAK\", \"FirstName\": \"Lisa\", \"LastName\": \"Hart\", \"Email\": \"lhart@acme.com\", \"Phone\": \"6125550103\", \"Title\": \"Operations Director\", \"AccountId\": \"001g8000015AJqoAAG\", \"Account.Name\": \"ACME Inc.\", \"Description\": null}], \"opportunities\": [{\"Id\": \"006g800000A19JmAAJ\", \"Name\": \"ACME - Spare Parts 2025\", \"AccountId\": \"001g8000015AJqoAAG\", \"Account.Name\": \"ACME Inc.\", \"StageName\": \"Closed Won\", \"Probability\": 100.0, \"Amount\": 9500.0, \"CloseDate\": \"2026-04-04\", \"Sales_Rep__c\": \"Dana\", \"Description\": null}], \"activities\": []}"
+    },
+    {
+      "tool": "get_related",
+      "args": {
+        "record_id": "001g8000015AJqnAAG"
+      },
+      "output": "{\"contacts\": [{\"Id\": \"003g800000tFsGbAAK\", \"FirstName\": \"Tom\", \"LastName\": \"Becker\", \"Email\": \"tbecker@acme.com\", \"Phone\": \"612.555.0102\", \"Title\": \"Plant Manager\", \"AccountId\": \"001g8000015AJqnAAG\", \"Account.Name\": \"Acme Corp\", \"Description\": null}], \"opportunities\": [{\"Id\": \"006g800000A19JkAAJ\", \"Name\": \"Acme - Line 2 Automation\", \"AccountId\": \"001g8000015AJqnAAG\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Needs Analysis\", \"Probability\": 20.0, \"Amount\": 72000.0, \"CloseDate\": \"2026-12-05\", \"Sales_Rep__c\": \"Dana\", \"Description\": null}, {\"Id\": \"006g800000A19JlAAJ\", \"Name\": \"Acme - Maintenance Contract\", \"AccountId\": \"001g8000015AJqnAAG\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Proposal/Price Quote\", \"Probability\": 75.0, \"Amount\": 18000.0, \"CloseDate\": \"2026-11-20\", \"Sales_Rep__c\": \"Dana\", \"Description\": null}], \"activities\": []}"
+    }
+  ]
+}

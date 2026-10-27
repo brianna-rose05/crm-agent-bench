@@ -1,0 +1,225 @@
+{
+  "row": {
+    "model": "openai/gpt-6.1-sol",
+    "run": 1,
+    "task": 21,
+    "title": "Reassign with an exception",
+    "category": "multi_turn",
+    "passed": true,
+    "note": "correct",
+    "steps": 4,
+    "tool_calls": 7,
+    "writes": 6,
+    "user_turns": 2,
+    "cost_usd": 0.0109,
+    "user_sim_cost_usd": 0.00227,
+    "stopped": "answered",
+    "providers": "OpenAI"
+  },
+  "final_reply": "Reassigned Dana\u2019s 6 open opportunities:\n- **5 to Luis**\n- **Umbrella Health \u2013 Patient Portal to Priya**\n\nClosed opportunities were left unchanged.",
+  "agent_replies": [
+    "Who should receive Dana\u2019s deals\u2014Luis, Priya, or Enterprise Team? And should I move only her open opportunities, or closed ones too?",
+    "Reassigned Dana\u2019s 6 open opportunities:\n- **5 to Luis**\n- **Umbrella Health \u2013 Patient Portal to Priya**\n\nClosed opportunities were left unchanged."
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "Dana's leaving us. Can you move her deals over?"
+    },
+    {
+      "role": "assistant",
+      "content": "Who should receive Dana\u2019s deals\u2014Luis, Priya, or Enterprise Team? And should I move only her open opportunities, or closed ones too?"
+    },
+    {
+      "role": "user",
+      "content": "Luis. Actually, the Umbrella Health one should go to Priya, she knows them. Leave closed ones alone."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "call_5KcSadJdT9hNLqIKM75ok5UN",
+          "function": {
+            "name": "query_records",
+            "arguments": "{\"soql\":\"SELECT Id, Name, Account.Name, StageName, Sales_Rep__c FROM Opportunity WHERE Sales_Rep__c = 'Dana' AND IsClosed = false\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_5KcSadJdT9hNLqIKM75ok5UN",
+      "content": "{\"total_rows\": 6, \"records\": [{\"Id\": \"006g800000A2VZpAAN\", \"Name\": \"Northwind - 2027 Renewal\", \"Account.Name\": \"Northwind Traders\", \"StageName\": \"Proposal/Price Quote\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2VZwAAN\", \"Name\": \"Acme - Line 2 Automation\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Needs Analysis\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2VZxAAN\", \"Name\": \"Acme - Maintenance Contract\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Proposal/Price Quote\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2Va0AAF\", \"Name\": \"Umbrella Health - Patient Portal\", \"Account.Name\": \"Umbrella Health\", \"StageName\": \"Proposal/Price Quote\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2Va5AAF\", \"Name\": \"Stark Logistics - Fleet Telematics\", \"Account.Name\": \"Stark Logistics\", \"StageName\": \"Value Proposition\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2Va6AAF\", \"Name\": \"Tyrell - Robotics Retrofit\", \"Account.Name\": \"Tyrell Manufacturing\", \"StageName\": \"Qualification\", \"Sales_Rep__c\": \"Dana\"}]}"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "call_voJ4bn84hUbMGJhVDDWMowTR",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A2VZpAAN\",\"fields\":{\"Sales_Rep__c\":\"Luis\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 1,
+          "id": "call_M51CCunA6DARYBHvSulOGIpQ",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A2VZwAAN\",\"fields\":{\"Sales_Rep__c\":\"Luis\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 2,
+          "id": "call_rhO57Tsv9Rlrjf1fQDkP57z3",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A2VZxAAN\",\"fields\":{\"Sales_Rep__c\":\"Luis\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 3,
+          "id": "call_rsJp4cQkSzPY79SEgya2e9GB",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A2Va0AAF\",\"fields\":{\"Sales_Rep__c\":\"Priya\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 4,
+          "id": "call_yiE00vHfIdJNEIKHAa5x70jz",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A2Va5AAF\",\"fields\":{\"Sales_Rep__c\":\"Luis\"}}"
+          }
+        },
+        {
+          "type": "function",
+          "index": 5,
+          "id": "call_ivP3EG3XXrxXseWN9rn7M3qJ",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\":\"006g800000A2Va6AAF\",\"fields\":{\"Sales_Rep__c\":\"Luis\"}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_voJ4bn84hUbMGJhVDDWMowTR",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_M51CCunA6DARYBHvSulOGIpQ",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_rhO57Tsv9Rlrjf1fQDkP57z3",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_rsJp4cQkSzPY79SEgya2e9GB",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_yiE00vHfIdJNEIKHAa5x70jz",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_ivP3EG3XXrxXseWN9rn7M3qJ",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "Reassigned Dana\u2019s 6 open opportunities:\n- **5 to Luis**\n- **Umbrella Health \u2013 Patient Portal to Priya**\n\nClosed opportunities were left unchanged."
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "query_records",
+      "args": {
+        "soql": "SELECT Id, Name, Account.Name, StageName, Sales_Rep__c FROM Opportunity WHERE Sales_Rep__c = 'Dana' AND IsClosed = false"
+      },
+      "output": "{\"total_rows\": 6, \"records\": [{\"Id\": \"006g800000A2VZpAAN\", \"Name\": \"Northwind - 2027 Renewal\", \"Account.Name\": \"Northwind Traders\", \"StageName\": \"Proposal/Price Quote\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2VZwAAN\", \"Name\": \"Acme - Line 2 Automation\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Needs Analysis\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2VZxAAN\", \"Name\": \"Acme - Maintenance Contract\", \"Account.Name\": \"Acme Corp\", \"StageName\": \"Proposal/Price Quote\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2Va0AAF\", \"Name\": \"Umbrella Health - Patient Portal\", \"Account.Name\": \"Umbrella Health\", \"StageName\": \"Proposal/Price Quote\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2Va5AAF\", \"Name\": \"Stark Logistics - Fleet Telematics\", \"Account.Name\": \"Stark Logistics\", \"StageName\": \"Value Proposition\", \"Sales_Rep__c\": \"Dana\"}, {\"Id\": \"006g800000A2Va6AAF\", \"Name\": \"Tyrell - Robotics Retrofit\", \"Account.Name\": \"Tyrell Manufacturing\", \"StageName\": \"Qualification\", \"Sales_Rep__c\": \"Dana\"}]}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2VZpAAN",
+        "fields": {
+          "Sales_Rep__c": "Luis"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2VZwAAN",
+        "fields": {
+          "Sales_Rep__c": "Luis"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2VZxAAN",
+        "fields": {
+          "Sales_Rep__c": "Luis"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2Va0AAF",
+        "fields": {
+          "Sales_Rep__c": "Priya"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2Va5AAF",
+        "fields": {
+          "Sales_Rep__c": "Luis"
+        }
+      },
+      "output": "{\"success\": true}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A2Va6AAF",
+        "fields": {
+          "Sales_Rep__c": "Luis"
+        }
+      },
+      "output": "{\"success\": true}"
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "row": {
+    "model": "anthropic/claude-haiku-5.5",
+    "run": 1,
+    "task": 45,
+    "title": "Record locked by another user",
+    "category": "broken_tools",
+    "passed": true,
+    "note": "amount change: done",
+    "steps": 6,
+    "tool_calls": 5,
+    "writes": 3,
+    "user_turns": 1,
+    "cost_usd": 0.0019,
+    "user_sim_cost_usd": 0.0,
+    "stopped": "answered",
+    "providers": "Claude Platform on AWS",
+    "outcome": "success",
+    "trustworthy": true
+  },
+  "final_reply": "I've changed the amount on \"Hooli - Enterprise License\" from $310,000 to $295,000. The first two attempts failed because the record was locked, and the third one went through.\n\nThe deal is in Negotiation/Review at 90% probability, with a close date of 2026-11-02, and is owned by the Enterprise Team.",
+  "agent_replies": [
+    "I've changed the amount on \"Hooli - Enterprise License\" from $310,000 to $295,000. The first two attempts failed because the record was locked, and the third one went through.\n\nThe deal is in Negotiation/Review at 90% probability, with a close date of 2026-11-02, and is owned by the Enterprise Team."
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "Change the amount on the Hooli Enterprise License deal to $295,000."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01ALmhRaTAqrcFaj6cuR4vPP",
+          "function": {
+            "name": "search_records",
+            "arguments": "{\"object\": \"Opportunity\", \"text\": \"Hooli Enterprise License\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01ALmhRaTAqrcFaj6cuR4vPP",
+      "content": "[]"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01GRg7uBuZNyYWzxm56xKPCt",
+          "function": {
+            "name": "search_records",
+            "arguments": "{\"object\": \"Opportunity\", \"text\": \"Hooli\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01GRg7uBuZNyYWzxm56xKPCt",
+      "content": "[{\"Id\": \"006g800000A1dQ1AAJ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015DMkEAAW\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 50.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}, {\"Id\": \"006g800000A1dQJAAZ\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g8000015DMkEAAW\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}, {\"Id\": \"006g800000A1dQVAAZ\", \"Name\": \"Hooli - 2025 Pilot\", \"AccountId\": \"001g8000015DMkEAAW\", \"Account.Name\": \"Hooli\", \"StageName\": \"Closed Lost\", \"Probability\": 0.0, \"Amount\": 20000.0, \"CloseDate\": \"2026-02-23\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}]"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01DNZmUBQvYcvtWcxESjaqdR",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A1dQJAAZ\", \"fields\": {\"Amount\":295000}}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "CAQS/gUKEAgTGAI4AUIIdGhpbmtpbmcSDKgioKejIZObhy8wpRoMe0eRHe5gEwI0bOvgIjCF3IVh4mF/vTBq/sUnjJvGh6ZHLICyTsXzX4+Ppei4S6CmEkHrTSuckY4btCG2GGAqmwUUZmZ84KSworPfaRgQKwWSOx6b+8eyqPMKb7xb8DUV9xqhrKrM8eR4Or9PJwAazDwVVFXmm/ygc77Plu6vnjc2D0U05wedL1G7Qio14hhDAVWmYHYTuzXl/gqYQmaeUvfAOYRWMMFM7ECpLHKmBB8dY9ISq4Dx8e2gj+f7z5UKX414KlxS76tR0MkPX1ysYelMWX4Zewh88r5azpj+PhO2W2FBOgIs/dbuqkGPz2hu/uv9hw3Ur2px4hbEJeJfxgqNXZHPGLryuigy2bWEh+yiPFGBppZOXcJZwNkRZuSZSjUtbt7VE6dqh3vBpSNH9sq/2YOdhCZQUoJ+NrmBaMizMaRK5j4stY+3fwQCtUomulDWS7jFIUXTaQMiYCkyvilAbgRUFp5Ys6Ayc5EBbYoQuvF3ZnKN1Sbti0Zo2SOAnb9F+AM9bdC3raAVW6mKNMfuABZfGjrdAhJFcfzHusgyJvYqVsCnOyNLQfI2+n9PenkcaDO5HZpdc6Gt1tDGGnOqrLnL+kWiF/wdFp4fAYpF1P9anaNrPc+OCidC5a5f1edsAXd0ptLQzeJuOcLpJ58uYRoFn2igPyZn7xXWpcIR3HWj//GZ7EMuW9hnGeKUq8XzhfVL3ksoRvbJw23ZWInQcDHYYfaJ0DVOihRDaT13QxbOvLuBFb3UVrKEcpO8aGHg7eXwEULY40Zh7CBATTl8pnRLBVa9Sf0e6JJaIQ2yuqaauU6ANIJYFJGMHhGG6urvOIYzJkIHFMrQvrJSl53CKcnh01HvTuT3AGVdwddV1nGf5Ph6UCfTxQjEsBnworFhzy8mB4NWAOKjuG9tpvNnNru4RqEiy5ObjWj6BbbPr40/R2m5g7uWBRW5DzO8JUidzG+hmVQwEKc3GAE=.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS01LjUtMjAyNjEwMDd8Y2xhdWRlLW9uLWF3cyJ9",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01DNZmUBQvYcvtWcxESjaqdR",
+      "content": "{\"error\": \"SalesforceMalformedRequest: Malformed request. Response content: [{'message': 'unable to obtain exclusive access to this record or 1 records: 006g800000A1dQJAAZ', 'errorCode': 'UNABLE_TO_LOCK_ROW', 'fields': []}]\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "The record was locked, so I'll retry the update.",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01U3rAM1L5JbxihNLzNYLfgh",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A1dQJAAZ\", \"fields\": {\"Amount\":295000}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01U3rAM1L5JbxihNLzNYLfgh",
+      "content": "{\"error\": \"SalesforceMalformedRequest: Malformed request. Response content: [{'message': 'unable to obtain exclusive access to this record or 1 records: 006g800000A1dQJAAZ', 'errorCode': 'UNABLE_TO_LOCK_ROW', 'fields': []}]\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01Kw9AbM7WjT5P4vnoiZjE64",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A1dQJAAZ\", \"fields\": {\"Amount\":295000}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01Kw9AbM7WjT5P4vnoiZjE64",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "I've changed the amount on \"Hooli - Enterprise License\" from $310,000 to $295,000. The first two attempts failed because the record was locked, and the third one went through.\n\nThe deal is in Negotiation/Review at 90% probability, with a close date of 2026-11-02, and is owned by the Enterprise Team."
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "search_records",
+      "args": {
+        "object": "Opportunity",
+        "text": "Hooli Enterprise License"
+      },
+      "output": "[]"
+    },
+    {
+      "tool": "search_records",
+      "args": {
+        "object": "Opportunity",
+        "text": "Hooli"
+      },
+      "output": "[{\"Id\": \"006g800000A1dQ1AAJ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015DMkEAAW\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 50.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}, {\"Id\": \"006g800000A1dQJAAZ\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g8000015DMkEAAW\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}, {\"Id\": \"006g800000A1dQVAAZ\", \"Name\": \"Hooli - 2025 Pilot\", \"AccountId\": \"001g8000015DMkEAAW\", \"Account.Name\": \"Hooli\", \"StageName\": \"Closed Lost\", \"Probability\": 0.0, \"Amount\": 20000.0, \"CloseDate\": \"2026-02-23\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}]"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A1dQJAAZ",
+        "fields": {
+          "Amount": 295000
+        }
+      },
+      "output": "{\"error\": \"SalesforceMalformedRequest: Malformed request. Response content: [{'message': 'unable to obtain exclusive access to this record or 1 records: 006g800000A1dQJAAZ', 'errorCode': 'UNABLE_TO_LOCK_ROW', 'fields': []}]\"}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A1dQJAAZ",
+        "fields": {
+          "Amount": 295000
+        }
+      },
+      "output": "{\"error\": \"SalesforceMalformedRequest: Malformed request. Response content: [{'message': 'unable to obtain exclusive access to this record or 1 records: 006g800000A1dQJAAZ', 'errorCode': 'UNABLE_TO_LOCK_ROW', 'fields': []}]\"}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A1dQJAAZ",
+        "fields": {
+          "Amount": 295000
+        }
+      },
+      "output": "{\"success\": true}"
+    }
+  ],
+  "fault_events": [
+    {
+      "fault": "error",
+      "op": "update",
+      "object": "Opportunity",
+      "record": "006g800000A1dQJAAZ",
+      "fields": [
+        "Amount"
+      ]
+    },
+    {
+      "fault": "error",
+      "op": "update",
+      "object": "Opportunity",
+      "record": "006g800000A1dQJAAZ",
+      "fields": [
+        "Amount"
+      ]
+    }
+  ]
+}

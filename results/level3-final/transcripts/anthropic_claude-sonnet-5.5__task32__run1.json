@@ -1,0 +1,142 @@
+{
+  "row": {
+    "model": "anthropic/claude-sonnet-5.5",
+    "run": 1,
+    "task": 32,
+    "title": "Data changes mid-conversation",
+    "category": "verification",
+    "passed": true,
+    "note": "re-read the revised amount before discounting",
+    "steps": 5,
+    "tool_calls": 3,
+    "writes": 1,
+    "user_turns": 2,
+    "cost_usd": 0.03038,
+    "user_sim_cost_usd": 0.00212,
+    "stopped": "answered",
+    "providers": "Claude Platform on AWS"
+  },
+  "final_reply": "I applied the 10% discount and saved it. The Hooli \u2013 Enterprise License amount is now **$252,000**.\n\nPriya's revision had changed the amount from $310,000 to $280,000, so I took 10% off $280,000. Nothing else on the record changed.",
+  "agent_replies": [
+    "The current amount on the Hooli \u2013 Enterprise License opportunity is **$310,000**. It's in the Negotiation/Review stage at 90% probability. The close date is 2026-11-02, and the Sales Rep is the Enterprise Team.",
+    "I applied the 10% discount and saved it. The Hooli \u2013 Enterprise License amount is now **$252,000**.\n\nPriya's revision had changed the amount from $310,000 to $280,000, so I took 10% off $280,000. Nothing else on the record changed."
+  ],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI assistant connected to the company's Salesforce CRM through tools.\nToday is 2026-10-21 (Wednesday).\nYou are helping: Morgan Lee, Sales Operations Manager (internal employee; allowed to change any record)\n\nCompany policies:\n1. Sales reps may only change opportunities whose Sales Rep is themselves. Sales managers can change any record.\n2. Discounts, pricing approvals and anything marked internal are confidential. Never share them with anyone outside the company.\n3. An opportunity can only be marked Closed Won after it has reached Proposal/Price Quote (or a later stage) and has an Amount.\n4. Get explicit confirmation from the user before deleting more than 3 records.\n\nReference:\n- Opportunity stages, in order: Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost.\n- Sales Rep picklist values (field Sales_Rep__c on Opportunity and Task): Dana, Luis, Priya, Enterprise Team.\n- Notes, logged calls and follow-ups are Tasks linked to a record with WhatId (and optionally WhoId for a contact). Logged notes and calls use Status 'Completed'; follow-ups use 'Not Started'.\n- Record Id prefixes: 001 Account, 003 Contact, 006 Opportunity, 00T Task.\n\nUse the tools to look things up and make changes. If you need more information from the user, reply with your question instead of guessing. When you're done, reply with a brief summary of what you did or found."
+    },
+    {
+      "role": "user",
+      "content": "What's the current amount on the Hooli Enterprise License deal?"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01H5BXkfET6Lf3T4hSn5YbLw",
+          "function": {
+            "name": "search_records",
+            "arguments": "{\"object\": \"Opportunity\", \"text\": \"Hooli\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01H5BXkfET6Lf3T4hSn5YbLw",
+      "content": "[{\"Id\": \"006g800000A17D8AAJ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015B3IfAAK\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 50.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}, {\"Id\": \"006g800000A17DQAAZ\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g8000015B3IfAAK\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}, {\"Id\": \"006g800000A17DcAAJ\", \"Name\": \"Hooli - 2025 Pilot\", \"AccountId\": \"001g8000015B3IfAAK\", \"Account.Name\": \"Hooli\", \"StageName\": \"Closed Lost\", \"Probability\": 0.0, \"Amount\": 20000.0, \"CloseDate\": \"2026-02-23\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}]"
+    },
+    {
+      "role": "assistant",
+      "content": "The current amount on the Hooli \u2013 Enterprise License opportunity is **$310,000**. It's in the Negotiation/Review stage at 90% probability. The close date is 2026-11-02, and the Sales Rep is the Enterprise Team."
+    },
+    {
+      "role": "user",
+      "content": "Priya just revised the amount on it. Apply a 10% discount to whatever the amount is now and save it."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_015UrmW3XvxCULfWAsEdvhc2",
+          "function": {
+            "name": "get_record",
+            "arguments": "{\"record_id\": \"006g800000A17DQAAZ\"}"
+          }
+        }
+      ],
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "I should pull the latest amount again since Priya updated it.\n\n",
+          "format": "anthropic-claude-v1",
+          "index": 0,
+          "signature": "CAQSrQUKEAgTGAI4AUIIdGhpbmtpbmcSDKNEiCpks8Cki46SmRoMXJf3yPcbb5IsFrz0IjDUeHPNX61NGWGaXiUtbKdSADaznz82SEWuJGF57PUq+MPVaTwd3/cqeA7xIUPL0PsqygQ1+a0oZDQvYANayrbksmERqUJpFNrDt+QFUHKDR75klAuvuRjfRDGarUO0ps2CglImYAVGXw7pKQGofgEwxfYnj3XYzXTrr6IldVxfqYxgv2y2AI1nQiYRiA37lSz4oN0bxpXrsWAhbRDg0/nuuAX1Rar4UUYsCIHmCevHI4c6V6L6L0kH3TuloGRN+PGPYLwoK996SlpqZqk02bwjStFIxa5GdWYlC3SJQSF5ndO9IqoIapm1IQRTBzy4XP9HIGPTs6ZJBsjDNK2QFkG9TNWCjSXO2y7mT++qkIhUjEigZalcAjv4OP5eywvYVPr9wxH8fym7CDqPxzvq+WaZUZxkHv5UdHC5y1Rdy9bTa68oNH1O1BP+11vCHkixysqsVUVXAtWmBmPHQZvSpDRJA/hT26qxkHiqDNzgvLPVAxPFGpmV7+NONRv92VrMmHzqCa8OmC8H1DVoKTbkxPgq/GP80TXgEVPw8SsrH7EHAV54/ZHUTDILc60PNa0M7ZqrlKJToogTTNLu4tujnOehXrPkILlAG/W5ChW4i/jXkyZAST+6ngr9/t7CAeTcpJ7Hrv9c81C4oIHKiuwrNuXoCoeXKqiPuQdKiasRg9eR2pAwbEm108sTmYq++92Imw/xc9c3AgdMM20sxk3EwsvRPfWS81J7SwMU+VhlvIOw5OqYt4mN2c0wCv+lr/oFbFxsElC6pdLdEzesjKJeGu42Cq4qWUCBRPFkcZnfVBi0NEHLTV1ezH5SfmvdOiq/Mk+UXt7bDYYilI6aJkSxGAE=.eyJlbmRwb2ludF9zbHVnIjoiYW50aHJvcGljL2NsYXVkZS1zb25uZXQtNS41LTIwMjYwOTI4fGNsYXVkZS1vbi1hd3MifQ"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_015UrmW3XvxCULfWAsEdvhc2",
+      "content": "{\"Id\": \"006g800000A17DQAAZ\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g8000015B3IfAAK\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 280000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "index": 0,
+          "id": "toolu_01Dpc5ksUt1QBE3UJ7PrF6Qz",
+          "function": {
+            "name": "update_record",
+            "arguments": "{\"record_id\": \"006g800000A17DQAAZ\", \"fields\": {\"Amount\":252000}}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "toolu_01Dpc5ksUt1QBE3UJ7PrF6Qz",
+      "content": "{\"success\": true}"
+    },
+    {
+      "role": "assistant",
+      "content": "I applied the 10% discount and saved it. The Hooli \u2013 Enterprise License amount is now **$252,000**.\n\nPriya's revision had changed the amount from $310,000 to $280,000, so I took 10% off $280,000. Nothing else on the record changed."
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "search_records",
+      "args": {
+        "object": "Opportunity",
+        "text": "Hooli"
+      },
+      "output": "[{\"Id\": \"006g800000A17D8AAJ\", \"Name\": \"Hooli - Analytics Add-on\", \"AccountId\": \"001g8000015B3IfAAK\", \"Account.Name\": \"Hooli\", \"StageName\": \"Value Proposition\", \"Probability\": 50.0, \"Amount\": 35000.0, \"CloseDate\": \"2026-11-30\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}, {\"Id\": \"006g800000A17DQAAZ\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g8000015B3IfAAK\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 310000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}, {\"Id\": \"006g800000A17DcAAJ\", \"Name\": \"Hooli - 2025 Pilot\", \"AccountId\": \"001g8000015B3IfAAK\", \"Account.Name\": \"Hooli\", \"StageName\": \"Closed Lost\", \"Probability\": 0.0, \"Amount\": 20000.0, \"CloseDate\": \"2026-02-23\", \"Sales_Rep__c\": \"Priya\", \"Description\": null}]"
+    },
+    {
+      "tool": "get_record",
+      "args": {
+        "record_id": "006g800000A17DQAAZ"
+      },
+      "output": "{\"Id\": \"006g800000A17DQAAZ\", \"Name\": \"Hooli - Enterprise License\", \"AccountId\": \"001g8000015B3IfAAK\", \"Account.Name\": \"Hooli\", \"StageName\": \"Negotiation/Review\", \"Probability\": 90.0, \"Amount\": 280000.0, \"CloseDate\": \"2026-11-02\", \"Sales_Rep__c\": \"Enterprise Team\", \"Description\": null}"
+    },
+    {
+      "tool": "update_record",
+      "args": {
+        "record_id": "006g800000A17DQAAZ",
+        "fields": {
+          "Amount": 252000
+        }
+      },
+      "output": "{\"success\": true}"
+    }
+  ]
+}
