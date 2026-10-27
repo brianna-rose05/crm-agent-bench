@@ -4,7 +4,7 @@
 
 This repository holds the code, data and full results behind the study *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks*.
 
-- **Paper:** [link to Substack post]
+- **Paper:** https://outsideengineer.substack.com/p/evaluating-ai-agents-on-salesforce
 - **Full appendix:** [APPENDIX.md](APPENDIX.md) (task list, grading corrections, cost, technical implementation)
 
 Five models worked as CRM agents in a live Salesforce Developer Edition account: Claude Opus 5.5, Claude Sonnet 5.5, Claude Haiku 5.5, GPT-6.1 Sol and DeepSeek V4.1 Flash. Every attempt was graded on what actually changed in the database, not on what the model said it did.
@@ -132,4 +132,4 @@ Each grader must pass a scripted correct agent and fail a scripted agent making 
 
 ## Citation
 
-> Pischke, B. (2026). *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks.* [link]
+> Pischke, B. (2026). *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks.* https://outsideengineer.substack.com/p/evaluating-ai-agents-on-salesforce

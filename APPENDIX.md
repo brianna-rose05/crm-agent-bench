@@ -1,6 +1,6 @@
 # Appendix
 
-Appendix to *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks*.
+Appendix to [*Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks*](https://outsideengineer.substack.com/p/evaluating-ai-agents-on-salesforce).
 
 ## A. Task list
 
