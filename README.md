@@ -1,10 +1,12 @@
 # Do AI Agents Check Their Work?
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23895152.svg)](https://doi.org/10.5281/zenodo.23895152)
+
 **A comparative evaluation of five AI models on Salesforce CRM tasks**
 
 This repository holds the code, data and full results behind the study *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks*.
 
-- **Paper:** https://outsideengineer.substack.com/p/evaluating-ai-agents-on-salesforce
+- **Paper (preprint, PDF):** [doi.org/10.5281/zenodo.23895152](https://doi.org/10.5281/zenodo.23895152) · [PDF in this repo](paper/Pischke_2026_Do_AI_Agents_Check_Their_Work.pdf) · [web version](https://outsideengineer.substack.com/p/evaluating-ai-agents-on-salesforce)
 - **Full appendix:** [APPENDIX.md](APPENDIX.md) (task list, grading corrections, cost, technical implementation)
 
 Five models worked as CRM agents in a live Salesforce Developer Edition account: Claude Opus 5.5, Claude Sonnet 5.5, Claude Haiku 5.5, GPT-6.1 Sol and DeepSeek V4.1 Flash. Every attempt was graded on what actually changed in the database, not on what the model said it did.
@@ -132,4 +134,16 @@ Each grader must pass a scripted correct agent and fail a scripted agent making 
 
 ## Citation
 
-> Pischke, B. (2026). *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks.* https://outsideengineer.substack.com/p/evaluating-ai-agents-on-salesforce
+> Pischke, B. (2026). *Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks*. Zenodo. https://doi.org/10.5281/zenodo.23895152
+
+```bibtex
+@misc{pischke2026crm,
+  author    = {Pischke, BriAnna},
+  title     = {Do AI Agents Check Their Work? A Comparative Evaluation of Five Models on Salesforce CRM Tasks},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23895152},
+  url       = {https://doi.org/10.5281/zenodo.23895152},
+  note      = {Preprint}
+}
+```
